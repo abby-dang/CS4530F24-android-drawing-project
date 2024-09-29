@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
  * This activity shows the different fragments of the drawing App.
  */
 class MainActivity : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)

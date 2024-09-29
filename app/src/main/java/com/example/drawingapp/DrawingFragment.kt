@@ -5,7 +5,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-//import androidx.fragment.app.activityViewModels
+import android.widget.FrameLayout
+import androidx.fragment.app.viewModels
 
 
 
@@ -13,11 +14,10 @@ import android.view.ViewGroup
  * The drawing fragment. Holds the canvas and drawing tools.
  */
 class DrawingFragment : Fragment() {
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            //val myViewModel : DrawingViewModel by activityViewModels()
+
         }
     }
 
@@ -25,9 +25,14 @@ class DrawingFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_drawing, container, false)
+        val viewModel: DrawingViewModel by viewModels()
+        val root = inflater.inflate(R.layout.fragment_drawing, container, false)
+
+        // Create a CanvasView with the view model in it.
+        val canvasView = CanvasView(requireContext(), null, viewModel)
+        val layout = root.findViewById<FrameLayout>(R.id.canvasHolderID)
+        layout.addView(canvasView)
+
+        return root
     }
-
-
 }

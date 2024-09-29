@@ -10,36 +10,32 @@ import android.util.AttributeSet
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModel
 
-class CanvasView(context: Context, attrs: AttributeSet) : View(context, attrs) {
-
-    // Move to View Model
-    private val bitmap = Bitmap.createBitmap(40, 40, Bitmap.Config.ARGB_8888)
-    private val paint = Paint()
+/**
+ * A custom view object that paints pixels to the
+ * view model and displays the view model's bitmap.
+ */
+class CanvasView(context: Context, attrs: AttributeSet? = null, var viewModel: DrawingViewModel) : View(context, attrs) {
 
     private val rect: Rect by lazy { Rect(0,0,width, height) }
-
-    private lateinit var viewModel: DrawingViewModel
+    private val paint = Paint()
 
     override fun onDraw(canvas: Canvas) {
-        Log.e("WOW", "DRAW")
         super.onDraw(canvas)
+        // Paint the screen white.
         paint.color = Color.WHITE
-        paint.setAntiAlias(false);
-        paint.setFilterBitmap(false);
         canvas.drawRect(0f, 0f, width.toFloat(), height.toFloat(), paint)
-        canvas.drawBitmap(bitmap, null, rect, paint)
+
+        // Paint the bitmap from the view model.
+        paint.isFilterBitmap = false;
+        viewModel.bitmap.value?.let { canvas.drawBitmap(it, null, rect, paint) }
     }
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
         viewModel.drawPixel(event.x, event.y, width, height)
+        invalidate()
         return true
     }
-
-    public fun drawPixel(x: Int, y: Int){
-        bitmap.setPixel(x, y, Color.GREEN)
-        invalidate()
-    }
-
-
 }

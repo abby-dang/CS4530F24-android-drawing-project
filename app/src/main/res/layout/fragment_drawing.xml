@@ -63,12 +63,12 @@
             android:text="\n\nWOW LOOK IT'S THE TOOL BAR!!!!"
             android:textAlignment="center"
             android:textColor="#B6B6B6" />
+
     </LinearLayout>
 
-    <com.example.drawingapp.CanvasView
-        android:id="@+id/canvasID"
+    <FrameLayout
+        android:id="@+id/canvasHolderID"
         android:layout_width="410dp"
-        android:layout_height="410dp"
-        android:background="#ff0000" />
+        android:layout_height="410dp"></FrameLayout>
 
 </LinearLayout>
