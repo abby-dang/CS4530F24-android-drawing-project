@@ -10,12 +10,12 @@
         android:id="@+id/openDrawingBtn"
         android:layout_width="100dp"
         android:layout_height="50dp"
-        android:text="Open"/>
+        android:text="@string/open"/>
     <TextView
         android:layout_width="300dp"
         android:layout_height="50dp"
-        android:text="MAIN SCREEN"
-        android:textSize ="30dp"
+        android:text="@string/main_screen"
+        android:textSize ="30sp"
         android:layout_gravity="center"
         android:textAlignment="center"/>
 
