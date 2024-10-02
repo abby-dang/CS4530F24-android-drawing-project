@@ -6,4 +6,5 @@
     <string name="main_screen">MAIN SCREEN</string>
     <string name="x">X</string>
     <string name="cloud">CLOUD</string>
+    <string name="cloud_text">Cloud</string>
 </resources>
