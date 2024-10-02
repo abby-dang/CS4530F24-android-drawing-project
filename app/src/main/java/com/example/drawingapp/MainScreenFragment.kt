@@ -19,10 +19,15 @@ class MainScreenFragment : Fragment() {
     ): View {
         val binding = FragmentMainScreenBinding.inflate(layoutInflater, container, false)
 
+        //setting up navigation for opening drawing screen MAY CHANGE LATER
         binding.openDrawingBtn.setOnClickListener{
             findNavController().navigate(R.id.action_open_drawing)
         }
 
+        //setting up navigation for opening cloud screen MAY CHANGE LATER
+        binding.openCloudBtn.setOnClickListener{
+            findNavController().navigate(R.id.action_open_cloud)
+        }
         return binding.root
     }
 }

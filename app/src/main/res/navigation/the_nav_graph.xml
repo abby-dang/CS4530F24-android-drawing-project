@@ -12,11 +12,26 @@
         <action
             android:id="@+id/action_open_drawing"
             app:destination="@id/drawingFragment"/>
+        <action
+            android:id="@+id/action_open_cloud"
+            app:destination="@id/cloudFragment"/>
     </fragment>
     <fragment
         android:id="@+id/drawingFragment"
         android:name="com.example.drawingapp.DrawingFragment"
         android:label="fragment_drawing"
         tools:layout="@layout/fragment_drawing">
+        <action
+            android:id="@+id/action_back"
+            app:destination="@id/mainScreenFragment"/>
+    </fragment>
+    <fragment
+        android:id="@+id/cloudFragment"
+        android:name="com.example.drawingapp.CloudFragment"
+        android:label="fragment_cloud"
+        tools:layout="@layout/fragment_cloud">
+        <action
+            android:id="@+id/action_back"
+            app:destination="@id/mainScreenFragment"/>
     </fragment>
 </navigation>
