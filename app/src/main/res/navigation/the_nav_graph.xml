@@ -1,0 +1,22 @@
+<?xml version ="1.0" encoding ="utf-8"?><!--  Learn More about how to use App Actions: https://developer.android.com/guide/actions/index.html -->
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/the_nav_graph"
+    app:startDestination="@id/mainScreenFragment">
+    <fragment
+        android:id = "@+id/mainScreenFragment"
+        android:name="com.example.drawingapp.MainScreenFragment"
+        android:label="fragment_main_screen"
+        tools:layout="@layout/fragment_main_screen">
+        <action
+            android:id="@+id/action_open_drawing"
+            app:destination="@id/drawingFragment"/>
+    </fragment>
+    <fragment
+        android:id="@+id/drawingFragment"
+        android:name="com.example.drawingapp.DrawingFragment"
+        android:label="fragment_drawing"
+        tools:layout="@layout/fragment_drawing">
+    </fragment>
+</navigation>

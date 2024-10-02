@@ -19,9 +19,9 @@ class MainActivity : AppCompatActivity() {
         val myViewModel : DrawingViewModel by viewModels()
 
         // Open the drawing fragment immediately. (CHANGE LATER)
-        val drawingFragment = DrawingFragment()
-        val fragmentTransaction = supportFragmentManager.beginTransaction()
-        fragmentTransaction.replace(R.id.main, drawingFragment)
-        fragmentTransaction.commit()
+//        val drawingFragment = DrawingFragment()
+//        val fragmentTransaction = supportFragmentManager.beginTransaction()
+//        fragmentTransaction.replace(R.id.main, drawingFragment)
+//        fragmentTransaction.commit()
     }
 }
