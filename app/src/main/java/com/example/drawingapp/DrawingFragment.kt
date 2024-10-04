@@ -9,7 +9,8 @@ import android.widget.FrameLayout
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
 import androidx.fragment.app.viewModels
-
+import androidx.navigation.fragment.findNavController
+import com.example.drawingapp.databinding.FragmentDrawingBinding
 
 
 /**
@@ -27,15 +28,18 @@ class DrawingFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         val viewModel: DrawingViewModel by viewModels()
-        val root = inflater.inflate(R.layout.fragment_drawing, container, false)
 
+        val binding = FragmentDrawingBinding.inflate(layoutInflater, container, false)
         // Create a CanvasView with the view model in it.
         val canvasView = CanvasView(requireContext(), null, viewModel)
-        val layout = root.findViewById<FrameLayout>(R.id.canvasHolderID)
-        layout.addView(canvasView)
+        binding.canvasHolderID.addView(canvasView)
 
-        return root
+        //setting navigation for back button
+        binding.backButtonID.setOnClickListener{
+            findNavController().navigate(R.id.action_back)
+        }
+        return binding.root
     }
 }

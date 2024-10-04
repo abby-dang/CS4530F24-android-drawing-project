@@ -19,6 +19,7 @@ class CloudFragment : Fragment() {
     ): View {
         val binding = FragmentCloudBinding.inflate(layoutInflater, container, false)
 
+        //setting navigation on back button
         binding.backBtn.setOnClickListener{
             findNavController().navigate(R.id.action_back)
         }
