@@ -7,7 +7,6 @@
     android:orientation="vertical"
     tools:context=".DrawingFragment">
 
-
     <LinearLayout
         android:id="@+id/fileOptions"
         android:layout_width="match_parent"
@@ -53,17 +52,35 @@
         android:id="@+id/toolBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="vertical">
+        <LinearLayout
+            android:id="@+id/toolBarInterior"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <Button
+                android:id="@+id/brushButtonID"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Brush" />
+
+            <Button
+                android:id="@+id/eraserButtonID"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Eraser" />
+        </LinearLayout>
 
         <TextView
-            android:id="@+id/DummText"
             android:layout_width="match_parent"
-            android:layout_height="97dp"
-            android:layout_weight="1"
-            android:text="\n\nWOW LOOK IT'S THE TOOL BAR!!!!"
+            android:layout_height="wrap_content"
             android:textAlignment="center"
-            android:textColor="#B6B6B6" />
-
+            android:text="Size" />
+        <SeekBar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
     </LinearLayout>
 
     <FrameLayout
