@@ -12,6 +12,8 @@ import kotlin.random.Random
  * as pen properties
  */
 class DrawingViewModel: ViewModel() {
+    private var currentColor = Color.argb(255, 0, 0, 0)
+
     private var width = 40
     private var height = 40
     private val _bitmap : MutableLiveData<Bitmap> =
@@ -34,6 +36,14 @@ class DrawingViewModel: ViewModel() {
             return
 
         // Actually draw the pixel.
-        _bitmap.value?.setPixel(xMapping, yMapping, Color.GREEN)
+        _bitmap.value?.setPixel(xMapping, yMapping, currentColor)
+    }
+
+    fun setBrush() {
+        currentColor = Color.argb(255, Color.red(currentColor), Color.green(currentColor), Color.blue(currentColor))
+    }
+
+    fun setEraser() {
+        currentColor = Color.argb(0, Color.red(currentColor), Color.green(currentColor), Color.blue(currentColor))
     }
 }

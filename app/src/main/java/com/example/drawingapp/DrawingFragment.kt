@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import androidx.activity.viewModels
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
 import androidx.fragment.app.viewModels
@@ -17,6 +18,8 @@ import com.example.drawingapp.databinding.FragmentDrawingBinding
  * The drawing fragment. Holds the canvas and drawing tools.
  */
 class DrawingFragment : Fragment() {
+
+    private val myViewModel : DrawingViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,10 +39,19 @@ class DrawingFragment : Fragment() {
         val canvasView = CanvasView(requireContext(), null, viewModel)
         binding.canvasHolderID.addView(canvasView)
 
-        //setting navigation for back button
+        // setting navigation for back button
         binding.backButtonID.setOnClickListener{
             findNavController().navigate(R.id.action_back)
         }
+
+        // set tool bar buttons
+        binding.brushButtonID.setOnClickListener{
+            myViewModel.setBrush()
+        }
+        binding.eraserButtonID.setOnClickListener{
+            myViewModel.setEraser()
+        }
+
         return binding.root
     }
 }
