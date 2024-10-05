@@ -79,6 +79,7 @@
             android:textAlignment="center"
             android:text="Size" />
         <SeekBar
+            android:id="@+id/sizeBarID"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </LinearLayout>
