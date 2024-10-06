@@ -5,7 +5,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.GridLayout
-import android.widget.GridView
 
 class ColorGridAdapter(private val context: Context?, private val colors: List<Int>) : BaseAdapter() {
 
@@ -19,8 +18,8 @@ class ColorGridAdapter(private val context: Context?, private val colors: List<I
         val view = convertView ?: View(context)
         view.setBackgroundColor(colors[position])
         val layoutParams = GridLayout.LayoutParams()
-        layoutParams.width = 100
-        layoutParams.height = 100
+        layoutParams.width = 150
+        layoutParams.height = 150
         view.layoutParams = layoutParams // Set item size
         return view
     }

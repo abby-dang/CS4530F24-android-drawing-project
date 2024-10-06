@@ -1,18 +1,13 @@
 package com.example.drawingapp
 
 import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.FrameLayout
-import android.widget.GridView
 import android.widget.SeekBar
-import androidx.activity.viewModels
-import androidx.fragment.app.commit
-import androidx.fragment.app.replace
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.drawingapp.databinding.FragmentDrawingBinding
@@ -60,7 +55,7 @@ class DrawingFragment : Fragment() {
                 // Change size display
                 override fun onProgressChanged(seek: SeekBar,
                                                progress: Int, fromUser: Boolean) {
-                    binding.sizeDisplayID.text = seek.progress.toString() + "%"
+                    binding.sizeDisplayID.text = "%d%".format(seek.progress)
                 }
                 override fun onStartTrackingTouch(seek: SeekBar) { }
 
@@ -71,14 +66,16 @@ class DrawingFragment : Fragment() {
             })
 
         // Set color grid
-        val colorList = listOf(Color.BLACK, Color.LTGRAY, Color.GRAY, Color.DKGRAY, Color.WHITE, Color.RED, Color.YELLOW, Color.GREEN, Color.CYAN, Color.BLUE, Color.MAGENTA)
+        val colorList = listOf(Color.BLACK, Color.DKGRAY, Color.LTGRAY, Color.WHITE, Color.RED, Color.YELLOW, Color.GREEN, Color.CYAN, Color.BLUE, Color.MAGENTA)
         val gridView = binding.colorGridView
 
         val adapter = ColorGridAdapter(this.context, colorList)
         gridView.adapter = adapter
 
         gridView.setOnItemClickListener { _, _, position, _ ->
-            myViewModel.setColor(colorList[position])
+            var selectedColor = colorList[position]
+            myViewModel.setColor(selectedColor)
+            binding.currentColorDisplay.background = ColorDrawable(selectedColor)
         }
 
         return binding.root
