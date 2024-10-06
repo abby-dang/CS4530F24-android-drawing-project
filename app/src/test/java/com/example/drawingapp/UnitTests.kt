@@ -1,6 +1,6 @@
 package com.example.drawingapp
 
-import androidx.lifecycle.testing.TestLifecycleOwner
+
 import org.junit.Test
 
 import org.junit.Assert.*
