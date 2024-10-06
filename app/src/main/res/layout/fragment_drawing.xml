@@ -74,14 +74,16 @@
         </LinearLayout>
 
         <TextView
+            android:id="@+id/sizeDisplayID"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAlignment="center"
-            android:text="Size" />
+            android:text="10%" />
         <SeekBar
             android:id="@+id/sizeBarID"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:progress="10" />
     </LinearLayout>
 
     <FrameLayout

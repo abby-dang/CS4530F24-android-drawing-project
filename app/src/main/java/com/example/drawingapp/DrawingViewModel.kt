@@ -19,8 +19,9 @@ class DrawingViewModel: ViewModel() {
         MutableLiveData(Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888))
 
     val bitmap = _bitmap as LiveData<Bitmap>
+
     private var currentColor = Color.argb(255, 0, 0, 0)
-    private var currentSize = (0.1f * width / 2f).toInt()   // BRUSH RADIUS
+    private var currentSize = ((0.05f * width).toInt() / 2)  // BRUSH RADIUS
 
     /**
      * Draws a pixel to the bitmap.
@@ -62,7 +63,8 @@ class DrawingViewModel: ViewModel() {
 
     // Size is calculated with respect to canvas size
     fun setSize(sizePercentage: Float) {
-        currentSize = ((sizePercentage/100f) * width / 2f).toInt()
+        currentSize = (((sizePercentage/100f) * (width/2)).toInt() / 2)
+
         Log.d("BRUSH SIZE CHANGE", currentSize.toString())
     }
 

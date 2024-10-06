@@ -56,7 +56,9 @@ class DrawingFragment : Fragment() {
         binding.sizeBarID.setOnSeekBarChangeListener(
             object : SeekBar.OnSeekBarChangeListener {
                 override fun onProgressChanged(seek: SeekBar,
-                                               progress: Int, fromUser: Boolean) { }
+                                               progress: Int, fromUser: Boolean) {
+                    binding.sizeDisplayID.text = seek.progress.toString() + "%"
+                }
                 override fun onStartTrackingTouch(seek: SeekBar) { }
 
                 // Change brush/eraser size
