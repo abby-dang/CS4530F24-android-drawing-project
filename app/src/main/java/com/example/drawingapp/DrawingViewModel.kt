@@ -63,8 +63,6 @@ class DrawingViewModel: ViewModel() {
     // Size is calculated with respect to canvas size
     fun setSize(sizePercentage: Float) {
         currentSize = (((sizePercentage/100f) * (width/2)).toInt() / 2)
-
-        Log.d("BRUSH SIZE CHANGE", currentSize.toString())
     }
 
     fun setColor(newColor: Int) {

@@ -55,7 +55,7 @@ class DrawingFragment : Fragment() {
                 // Change size display
                 override fun onProgressChanged(seek: SeekBar,
                                                progress: Int, fromUser: Boolean) {
-                    binding.sizeDisplayID.text = "%d%".format(seek.progress)
+                    binding.sizeDisplayID.text = seek.progress.toString() + "%"
                 }
                 override fun onStartTrackingTouch(seek: SeekBar) { }
 
