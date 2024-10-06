@@ -68,4 +68,12 @@ class DrawingViewModel: ViewModel() {
     fun setColor(newColor: Int) {
         currentColor = Color.argb(Color.alpha(currentColor), Color.red(newColor), Color.green(newColor), Color.blue(newColor))
     }
+
+    fun getSize(): Int {
+        return currentSize;
+    }
+
+    fun getColor(): Int {
+        return currentColor;
+    }
 }
