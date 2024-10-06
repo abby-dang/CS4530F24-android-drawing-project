@@ -1,5 +1,6 @@
 package com.example.drawingapp
 
+
 import org.junit.Test
 
 import org.junit.Assert.*
@@ -15,7 +16,7 @@ class UnitTests {
     }
 
     @Test
-    fun test() {
+    fun basicSizeTest() {
 
     }
 }
