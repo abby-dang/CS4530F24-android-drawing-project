@@ -21,7 +21,7 @@ class DrawingViewModel: ViewModel() {
     val bitmap = _bitmap as LiveData<Bitmap>
 
     private var currentColor = Color.argb(255, 0, 0, 0)
-    private var currentSize = ((0.05f * width).toInt() / 2)  // BRUSH RADIUS
+    private var currentSize = ((0.1f * width).toInt() / 2)  // BRUSH RADIUS
 
     /**
      * Draws a pixel to the bitmap.
@@ -68,7 +68,7 @@ class DrawingViewModel: ViewModel() {
         Log.d("BRUSH SIZE CHANGE", currentSize.toString())
     }
 
-    fun setColor() {
-
+    fun setColor(newColor: Int) {
+        currentColor = Color.argb(Color.alpha(currentColor), Color.red(newColor), Color.green(newColor), Color.blue(newColor))
     }
 }
