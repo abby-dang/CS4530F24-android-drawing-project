@@ -10,8 +10,6 @@ import org.junit.Assert.*
  * Makes sure functions are working as intended.
  */
 class UnitTests {
-    private val vm = DrawingViewModel();
-    val lifecycleOwner = TestLifecycleOwner();
     @Test
     fun addition_isCorrect() {
         assertEquals(4, 2 + 2)
