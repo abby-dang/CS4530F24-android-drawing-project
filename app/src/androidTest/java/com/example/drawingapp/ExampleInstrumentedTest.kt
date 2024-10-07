@@ -1,6 +1,7 @@
 package com.example.drawingapp
 
 import android.graphics.Color
+import androidx.core.graphics.alpha
 import androidx.lifecycle.testing.TestLifecycleOwner
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -30,16 +31,15 @@ class ExampleInstrumentedTest {
 
     @Test
     fun testBasicBitmapEvent() {
-        val vm = DrawingViewModel();
+        val vm = DrawingViewModel()
         runBlocking {
-            val lifecycleOwner = TestLifecycleOwner();
-            val before = vm.bitmap.value!!
-            var callbackFired = false;
+            val lifecycleOwner = TestLifecycleOwner()
+            var callbackFired = false
 
             lifecycleOwner.run {
                 withContext(Dispatchers.Main) {
                     vm.bitmap.observe(lifecycleOwner) {
-                        callbackFired = true;
+                        callbackFired = true
                     }
 
                     vm.drawPixel(30.0F, 30.0F, 100, 100)
@@ -53,9 +53,9 @@ class ExampleInstrumentedTest {
 
     @Test
     fun testBasicBrushSizeChange() {
-        val vm = DrawingViewModel();
+        val vm = DrawingViewModel()
         runBlocking {
-            val lifecycleOwner = TestLifecycleOwner();
+            val lifecycleOwner = TestLifecycleOwner()
             lifecycleOwner.run {
                 withContext(Dispatchers.Main) {
                     vm.setSize(30.0F)
@@ -69,9 +69,9 @@ class ExampleInstrumentedTest {
 
     @Test
     fun testBasicBrushColorChange() {
-        val vm = DrawingViewModel();
+        val vm = DrawingViewModel()
         runBlocking {
-            val lifecycleOwner = TestLifecycleOwner();
+            val lifecycleOwner = TestLifecycleOwner()
             lifecycleOwner.run {
                 withContext(Dispatchers.Main) {
                     vm.setColor(100)
@@ -80,6 +80,35 @@ class ExampleInstrumentedTest {
             }
 
         }
+    }
 
+    @Test
+    fun testBasicEraseChange() {
+        val vm = DrawingViewModel()
+        runBlocking {
+            val lifecycleOwner = TestLifecycleOwner()
+            lifecycleOwner.run {
+                withContext(Dispatchers.Main) {
+                    vm.setEraser()
+                    assertEquals(0, vm.getColor().alpha)
+                }
+            }
+
+        }
+    }
+
+    @Test
+    fun testBasicBrushChange() {
+        val vm = DrawingViewModel()
+        runBlocking {
+            val lifecycleOwner = TestLifecycleOwner()
+            lifecycleOwner.run {
+                withContext(Dispatchers.Main) {
+                    vm.setBrush()
+                    assertEquals(255, vm.getColor().alpha)
+                }
+            }
+
+        }
     }
 }
