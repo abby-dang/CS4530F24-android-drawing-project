@@ -1,6 +1,7 @@
 package com.example.drawingapp
 
 import android.graphics.Color
+import androidx.core.graphics.alpha
 import androidx.lifecycle.testing.TestLifecycleOwner
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -80,6 +81,35 @@ class ExampleInstrumentedTest {
             }
 
         }
+    }
 
+    @Test
+    fun testBasicEraseChange() {
+        val vm = DrawingViewModel();
+        runBlocking {
+            val lifecycleOwner = TestLifecycleOwner();
+            lifecycleOwner.run {
+                withContext(Dispatchers.Main) {
+                    vm.setEraser()
+                    assertEquals(0, vm.getColor().alpha)
+                }
+            }
+
+        }
+    }
+
+    @Test
+    fun testBasicBrushChange() {
+        val vm = DrawingViewModel();
+        runBlocking {
+            val lifecycleOwner = TestLifecycleOwner();
+            lifecycleOwner.run {
+                withContext(Dispatchers.Main) {
+                    vm.setBrush()
+                    assertEquals(255, vm.getColor().alpha)
+                }
+            }
+
+        }
     }
 }
