@@ -34,13 +34,12 @@ class ExampleInstrumentedTest {
         val vm = DrawingViewModel()
         runBlocking {
             val lifecycleOwner = TestLifecycleOwner()
-            val before = vm.bitmap.value!!
-            var callbackFired = false;
+            var callbackFired = false
 
             lifecycleOwner.run {
                 withContext(Dispatchers.Main) {
                     vm.bitmap.observe(lifecycleOwner) {
-                        callbackFired = true;
+                        callbackFired = true
                     }
 
                     vm.drawPixel(30.0F, 30.0F, 100, 100)
