@@ -31,9 +31,9 @@ class ExampleInstrumentedTest {
 
     @Test
     fun testBasicBitmapEvent() {
-        val vm = DrawingViewModel();
+        val vm = DrawingViewModel()
         runBlocking {
-            val lifecycleOwner = TestLifecycleOwner();
+            val lifecycleOwner = TestLifecycleOwner()
             val before = vm.bitmap.value!!
             var callbackFired = false;
 
@@ -54,9 +54,9 @@ class ExampleInstrumentedTest {
 
     @Test
     fun testBasicBrushSizeChange() {
-        val vm = DrawingViewModel();
+        val vm = DrawingViewModel()
         runBlocking {
-            val lifecycleOwner = TestLifecycleOwner();
+            val lifecycleOwner = TestLifecycleOwner()
             lifecycleOwner.run {
                 withContext(Dispatchers.Main) {
                     vm.setSize(30.0F)
@@ -70,9 +70,9 @@ class ExampleInstrumentedTest {
 
     @Test
     fun testBasicBrushColorChange() {
-        val vm = DrawingViewModel();
+        val vm = DrawingViewModel()
         runBlocking {
-            val lifecycleOwner = TestLifecycleOwner();
+            val lifecycleOwner = TestLifecycleOwner()
             lifecycleOwner.run {
                 withContext(Dispatchers.Main) {
                     vm.setColor(100)
@@ -85,9 +85,9 @@ class ExampleInstrumentedTest {
 
     @Test
     fun testBasicEraseChange() {
-        val vm = DrawingViewModel();
+        val vm = DrawingViewModel()
         runBlocking {
-            val lifecycleOwner = TestLifecycleOwner();
+            val lifecycleOwner = TestLifecycleOwner()
             lifecycleOwner.run {
                 withContext(Dispatchers.Main) {
                     vm.setEraser()
@@ -100,9 +100,9 @@ class ExampleInstrumentedTest {
 
     @Test
     fun testBasicBrushChange() {
-        val vm = DrawingViewModel();
+        val vm = DrawingViewModel()
         runBlocking {
-            val lifecycleOwner = TestLifecycleOwner();
+            val lifecycleOwner = TestLifecycleOwner()
             lifecycleOwner.run {
                 withContext(Dispatchers.Main) {
                     vm.setBrush()
