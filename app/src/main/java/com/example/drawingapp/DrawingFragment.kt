@@ -44,8 +44,11 @@ class DrawingFragment : Fragment() {
         }
 
         // Set tool bar buttons
-        binding.brushButtonID.setOnClickListener{
-            myViewModel.setBrush()
+        binding.circleBrushButtonID.setOnClickListener{
+            myViewModel.setCircleBrush()
+        }
+        binding.squareBrushButtonID.setOnClickListener{
+            myViewModel.setSquareBrush()
         }
         binding.eraserButtonID.setOnClickListener{
             myViewModel.setEraser()

@@ -58,12 +58,20 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
+
             <Button
-                android:id="@+id/brushButtonID"
+                android:id="@+id/circleBrushButtonID"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Brush" />
+                android:text="Circle" />
+
+            <Button
+                android:id="@+id/squareBrushButtonID"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Square" />
 
             <Button
                 android:id="@+id/eraserButtonID"

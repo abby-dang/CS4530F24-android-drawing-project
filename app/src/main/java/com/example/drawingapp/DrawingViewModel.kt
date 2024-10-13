@@ -1,11 +1,13 @@
 package com.example.drawingapp
 
+
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+
 
 /**
  * A view model that stores a bitmap representing the canvas as well
@@ -17,10 +19,22 @@ class DrawingViewModel: ViewModel() {
     private val _bitmap : MutableLiveData<Bitmap> =
         MutableLiveData(Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888))
 
+
     val bitmap = _bitmap as LiveData<Bitmap>
+
 
     private var currentColor = Color.argb(255, 0, 0, 0)
     private var currentSize = ((0.1f * width).toInt() / 2)  // BRUSH RADIUS
+
+
+    enum class BrushTypes {
+        circle,
+        square
+    }
+
+
+    var currentBrushType = BrushTypes.circle;
+
 
     /**
      * Draws a pixel to the bitmap.
@@ -32,13 +46,17 @@ class DrawingViewModel: ViewModel() {
         var xMapping = ((x / canvasWidth) * width).toInt()
         var yMapping = ((y / canvasHeight) * height).toInt()
 
-        // Only attempt to draw if the coordinates are on the bitmap. (Prevents Crash)
-        if (xMapping >= width || yMapping >= height || xMapping < 0 || yMapping < 0)
-            return
 
-        // Actually draw the pixel.
-        //_bitmap.value?.setPixel(xMapping, yMapping, currentColor)
+        if (currentBrushType == BrushTypes.circle){
+            drawCircle(xMapping, yMapping)
+        }
+        else if (currentBrushType == BrushTypes.square){
+            drawSquare(xMapping, yMapping)
+        }
+    }
 
+
+    fun drawCircle(xMapping: Int, yMapping: Int){
         for (i in -currentSize..currentSize) {
             for (j in -currentSize..currentSize) {
                 // Set pixel if inside brush radius AND not outside canvas
@@ -52,26 +70,53 @@ class DrawingViewModel: ViewModel() {
         }
     }
 
-    fun setBrush() {
+
+    fun drawSquare(xMapping: Int, yMapping: Int){
+        for (i in -currentSize..currentSize) {
+            for (j in -currentSize..currentSize) {
+                if ((xMapping + i < width) && (yMapping + j < height) &&
+                    (xMapping + i >= 0) && (yMapping + j >= 0)
+                ) {
+                    _bitmap.value?.setPixel(xMapping + i, yMapping + j, currentColor)
+                }
+            }
+        }
+    }
+
+
+    fun setCircleBrush() {
+        currentBrushType = BrushTypes.circle;
         currentColor = Color.argb(255, Color.red(currentColor), Color.green(currentColor), Color.blue(currentColor))
     }
 
+
+    fun setSquareBrush() {
+        currentBrushType = BrushTypes.square;
+        currentColor = Color.argb(255, Color.red(currentColor), Color.green(currentColor), Color.blue(currentColor))
+    }
+
+
     fun setEraser() {
+        currentBrushType = BrushTypes.square;
         currentColor = Color.argb(0, Color.red(currentColor), Color.green(currentColor), Color.blue(currentColor))
     }
+
 
     // Size is calculated with respect to canvas size
     fun setSize(sizePercentage: Float) {
         currentSize = (((sizePercentage/100f) * (width/2)).toInt() / 2)
     }
 
+
     fun setColor(newColor: Int) {
         currentColor = Color.argb(Color.alpha(currentColor), Color.red(newColor), Color.green(newColor), Color.blue(newColor))
     }
 
+
     fun getSize(): Int {
         return currentSize;
     }
+
 
     fun getColor(): Int {
         return currentColor;
