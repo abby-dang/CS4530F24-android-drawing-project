@@ -7,12 +7,14 @@ import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import kotlinx.coroutines.flow.Flow
 
 /**
  *  A room database with only one entity/table, a DrawingData table.
  */
-@Database(entities= [DrawingData::class], version = 1, exportSchema = false)
+@Database(entities= [DrawingData::class], version = 2, exportSchema = false)
+@TypeConverters(BitmapConverter::class)
 abstract class DrawingDatabase : RoomDatabase(){
     abstract fun dao(): DrawingDAO
 

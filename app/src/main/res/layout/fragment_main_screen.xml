@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#232323"
     android:orientation="vertical"
     tools:context=".MainScreenFragment">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
@@ -24,6 +26,7 @@
             android:layout_width="100dp"
             android:layout_height="50dp"
             android:text="@string/cloud"/>
+
     </LinearLayout>
     <TextView
         android:layout_width="300dp"
@@ -32,5 +35,15 @@
         android:textSize ="30sp"
         android:layout_gravity="center"
         android:textAlignment="center"/>
+
+    <Button
+        android:id="@+id/saveDrawingDemoBtn"
+        android:layout_width="match_parent"
+        android:layout_height="101dp"
+        android:layout_marginTop="154dp"
+        android:text="Save Drawing Demo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </LinearLayout>
