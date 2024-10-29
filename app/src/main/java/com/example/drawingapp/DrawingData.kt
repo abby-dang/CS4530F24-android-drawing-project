@@ -11,7 +11,7 @@ import java.util.Date
 /**
  * This class contains methods that convert bitmaps to byte arrays and vice versa.
  * This is because room databases can't store bitmaps. These methods were written
- * with the help of ChatGTP.
+ * with the help of ChatGPT.
  */
 class BitmapConverter {
     @TypeConverter

@@ -8,11 +8,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.drawingapp.databinding.FragmentMainScreenBinding
 
-class MainScreenFragment : Fragment() {
+class SelectDrawingScreenFragment : Fragment() {
 
     private val viewModel: SelectDrawingViewModel by viewModels{
         SelectDrawingViewModelFactory((requireActivity().application as DrawingApplication).drawingRepository)}
@@ -33,10 +32,16 @@ class MainScreenFragment : Fragment() {
             findNavController().navigate(R.id.action_open_cloud)
         }
 
+        // This button is just here to demo that the saving file works.
         binding.saveDrawingDemoBtn.setOnClickListener{
-            Log.e("VM", "Button clicked")
-            viewModel.saveDrawing(Bitmap.createBitmap(10, 10, Bitmap.Config.ARGB_8888), "WOW")
+            // This is an example of how to save a drawing to the data base.
+            viewModel.saveDrawing(Bitmap.createBitmap(10, 10, Bitmap.Config.ARGB_8888), "APPLE")
         }
+
+         // This is where you can update the list of drawings selectable.
+//         viewModel.drawings.observe(viewLifecycleOwner){
+//
+//         }
 
         return binding.root
     }
