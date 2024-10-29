@@ -104,7 +104,7 @@ class ExampleInstrumentedTest {
             val lifecycleOwner = TestLifecycleOwner()
             lifecycleOwner.run {
                 withContext(Dispatchers.Main) {
-                    vm.setBrush()
+                    vm.setCircleBrush()
                     assertEquals(255, vm.getColor().alpha)
                 }
             }

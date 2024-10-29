@@ -11,7 +11,7 @@ import com.example.drawingapp.databinding.FragmentMainScreenBinding
 
 class MainScreenFragment : Fragment() {
 
-    private val viewModel: MainScreenViewModel by viewModels()
+    private val viewModel: SelectDrawingViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
