@@ -5,6 +5,7 @@ import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -24,8 +25,17 @@ class DrawingFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
+        val converter = BitmapConverter()
+        val bitmap = converter.toBitmap(arguments?.getByteArray("bitmap"))
 
+        if (bitmap != null) {
+            Log.d("Load Canvas", "Load Canvas")
+            val mutableBitmap = bitmap.copy(Bitmap.Config.ARGB_8888, true)
+            myViewModel.updateBitmap(mutableBitmap)
+        }
+        else {
+            Log.d("New Canvas", "New Canvas")
+            myViewModel.updateBitmap(Bitmap.createBitmap(40, 40, Bitmap.Config.ARGB_8888))
         }
     }
 
@@ -33,21 +43,11 @@ class DrawingFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val converter = BitmapConverter()
-        val bitmap = converter.toBitmap(arguments?.getByteArray("bitmap"))
-
-        val viewModel: DrawingViewModel by viewModels()
-        if (bitmap != null) {
-            viewModel.updateBitmap(bitmap)
-        }
-        else {
-            viewModel.updateBitmap(Bitmap.createBitmap(40, 40, Bitmap.Config.ARGB_8888))
-        }
 
         val binding = FragmentDrawingBinding.inflate(layoutInflater, container, false)
 
         // Create a CanvasView with the view model in it
-        val canvasView = CanvasView(requireContext(), null, viewModel)
+        val canvasView = CanvasView(requireContext(), null, myViewModel)
         binding.canvasHolderID.addView(canvasView)
 
         // Setting navigation for back button

@@ -40,7 +40,7 @@
         android:id="@+id/saveDrawingDemoBtn"
         android:layout_width="match_parent"
         android:layout_height="101dp"
-        android:layout_marginTop="154dp"
+        android:layout_marginTop="50dp"
         android:text="Save Drawing Demo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -50,8 +50,18 @@
         android:id="@+id/loadDrawingDemoBtn"
         android:layout_width="match_parent"
         android:layout_height="101dp"
-        android:layout_marginTop="154dp"
+        android:layout_marginTop="50dp"
         android:text="Load Drawing Demo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/clearDAOBtn"
+        android:layout_width="match_parent"
+        android:layout_height="101dp"
+        android:layout_marginTop="154dp"
+        android:text="Clear DAO (Testing Only)"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

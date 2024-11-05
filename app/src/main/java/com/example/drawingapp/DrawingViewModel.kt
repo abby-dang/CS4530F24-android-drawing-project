@@ -29,6 +29,7 @@ class DrawingViewModel: ViewModel() {
     var currentBrushType = BrushTypes.circle;
 
     fun updateBitmap(newBitmap: Bitmap){
+        Log.d("Update Bitmap", newBitmap.toString())
         _bitmap.value = newBitmap
         width = newBitmap.width
         height = newBitmap.height
@@ -43,7 +44,6 @@ class DrawingViewModel: ViewModel() {
         // Convert canvas coordinates to bitmap coordinates.
         var xMapping = ((x / canvasWidth) * width).toInt()
         var yMapping = ((y / canvasHeight) * height).toInt()
-
 
         if (currentBrushType == BrushTypes.circle){
             drawCircle(xMapping, yMapping)

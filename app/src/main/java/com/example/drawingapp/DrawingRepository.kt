@@ -16,5 +16,11 @@ class DrawingRepository(private val scope: CoroutineScope,
         }
     }
 
-    suspend fun getDrawing(fileName: String) = dao.retrieveDrawing(fileName).bitmap
+    suspend fun getDrawing(fileName: String): Bitmap = dao.retrieveDrawing(fileName).bitmap
+
+    fun clearDAO() {
+        scope.launch {
+            dao.clearDrawings()
+        }
+    }
 }

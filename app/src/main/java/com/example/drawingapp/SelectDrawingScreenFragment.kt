@@ -3,6 +3,7 @@ package com.example.drawingapp
 import android.graphics.Bitmap
 import androidx.fragment.app.viewModels
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -48,6 +49,11 @@ class SelectDrawingScreenFragment : Fragment() {
             }
         }
 
+        // This button clears the DAO for testing purposes.
+        binding.clearDAOBtn.setOnClickListener{
+            viewModel.clearDrawings()
+        }
+
          // This is where you can update the list of drawings selectable.
 //         viewModel.drawings.observe(viewLifecycleOwner){
 //         }
@@ -55,5 +61,3 @@ class SelectDrawingScreenFragment : Fragment() {
         return binding.root
     }
 }
-
-class SelectDrawingNavigation

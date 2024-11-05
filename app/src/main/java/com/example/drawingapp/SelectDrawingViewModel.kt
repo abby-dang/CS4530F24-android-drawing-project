@@ -21,6 +21,10 @@ class SelectDrawingViewModel(private val repository: DrawingRepository) : ViewMo
             onResult(drawing) // Pass the data back to the fragment
         }
     }
+
+    fun clearDrawings() {
+        repository.clearDAO()
+    }
 }
 
 // This provides a way of making a view model with parameters.
