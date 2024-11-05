@@ -16,9 +16,9 @@ import androidx.lifecycle.ViewModel
 class DrawingViewModel: ViewModel() {
     private var width = 40
     private var height = 40
+
     private val _bitmap : MutableLiveData<Bitmap> =
         MutableLiveData(Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888))
-
 
     val bitmap = _bitmap as LiveData<Bitmap>
 

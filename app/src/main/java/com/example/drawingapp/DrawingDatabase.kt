@@ -50,6 +50,9 @@ interface DrawingDAO {
     @Insert
     suspend fun saveDrawing(data: DrawingData)
 
+    @Query("SELECT * FROM drawings WHERE fileName = :name")
+    suspend fun retrieveDrawing(name: String) : DrawingData
+
     @Query("SELECT * from drawings ORDER BY fileName ASC")
     fun allDrawings() : Flow<List<DrawingData>>
 }

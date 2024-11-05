@@ -4,6 +4,8 @@ import android.graphics.Bitmap
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.launch
 
 class SelectDrawingViewModel(private val repository: DrawingRepository) : ViewModel() {
 
@@ -11,6 +13,13 @@ class SelectDrawingViewModel(private val repository: DrawingRepository) : ViewMo
 
     fun saveDrawing(bitmap: Bitmap, fileName: String) {
         repository.saveNewDrawing(bitmap, fileName)
+    }
+
+    fun loadDrawing(fileName: String, onResult: (Bitmap) -> Unit) {
+        viewModelScope.launch {
+            val drawing = repository.getDrawing(fileName)
+            onResult(drawing) // Pass the data back to the fragment
+        }
     }
 }
 

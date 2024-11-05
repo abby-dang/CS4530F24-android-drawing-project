@@ -10,9 +10,11 @@ class DrawingRepository(private val scope: CoroutineScope,
 
     val allDrawings = dao.allDrawings().asLiveData()
 
-    fun saveNewDrawing(bitmap: Bitmap, fileName: String){
+    fun saveNewDrawing(bitmap: Bitmap, fileName: String) {
         scope.launch {
             dao.saveDrawing(DrawingData(bitmap, fileName))
         }
     }
+
+    suspend fun getDrawing(fileName: String) = dao.retrieveDrawing(fileName).bitmap
 }

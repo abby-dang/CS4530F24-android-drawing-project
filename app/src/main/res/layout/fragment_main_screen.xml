@@ -13,7 +13,7 @@
         android:layout_height="50dp"
         android:orientation="horizontal">
         <Button
-            android:id="@+id/openDrawingBtn"
+            android:id="@+id/new_drawing_btn"
             android:layout_width="100dp"
             android:layout_height="50dp"
             android:text="@string/open"/>
@@ -42,6 +42,16 @@
         android:layout_height="101dp"
         android:layout_marginTop="154dp"
         android:text="Save Drawing Demo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/loadDrawingDemoBtn"
+        android:layout_width="match_parent"
+        android:layout_height="101dp"
+        android:layout_marginTop="154dp"
+        android:text="Load Drawing Demo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
