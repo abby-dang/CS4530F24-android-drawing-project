@@ -12,6 +12,7 @@ import com.example.drawingapp.databinding.FragmentMainScreenBinding
 
 class SelectDrawingScreenFragment : Fragment() {
 
+    private val converter = BitmapConverter()
     private val viewModel: SelectDrawingViewModel by viewModels{
         SelectDrawingViewModelFactory((requireActivity().application as DrawingApplication).drawingRepository)}
 
@@ -23,7 +24,6 @@ class SelectDrawingScreenFragment : Fragment() {
 
         //setting up navigation for opening drawing screen MAY CHANGE LATER
         binding.newDrawingBtn.setOnClickListener{
-            // TO-DO: use bundle to pass bitmap
             findNavController().navigate(R.id.action_open_drawing)
         }
 
@@ -35,18 +35,21 @@ class SelectDrawingScreenFragment : Fragment() {
         // This button is just here to demo that the saving file works.
         binding.saveDrawingDemoBtn.setOnClickListener{
             // This is an example of how to save a drawing to the data base.
-            viewModel.saveDrawing(Bitmap.createBitmap(10, 10, Bitmap.Config.ARGB_8888), "APPLE")
+            viewModel.saveDrawing(Bitmap.createBitmap(40, 40, Bitmap.Config.ARGB_8888), "APPLE")
         }
 
         // This button demos loading a drawing.
         binding.loadDrawingDemoBtn.setOnClickListener{
-            viewModel.loadDrawing("APPLE") { val drawing : Bitmap }
-            //
+            viewModel.loadDrawing("APPLE") { drawing ->
+                val bundle = Bundle().apply {
+                    putByteArray("bitmap", converter.fromBitmap(drawing))
+                }
+                findNavController().navigate(R.id.action_open_drawing, bundle)
+            }
         }
 
          // This is where you can update the list of drawings selectable.
 //         viewModel.drawings.observe(viewLifecycleOwner){
-//         TO-DO: use bundle to pass bitmap
 //         }
 
         return binding.root

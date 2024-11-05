@@ -14,27 +14,25 @@ import androidx.lifecycle.ViewModel
  * as pen properties
  */
 class DrawingViewModel: ViewModel() {
+    private val _bitmap : MutableLiveData<Bitmap> = MutableLiveData()
+    val bitmap : LiveData<Bitmap> get() = _bitmap
     private var width = 40
     private var height = 40
 
-    private val _bitmap : MutableLiveData<Bitmap> =
-        MutableLiveData(Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888))
-
-    val bitmap = _bitmap as LiveData<Bitmap>
-
-
     private var currentColor = Color.argb(255, 0, 0, 0)
     private var currentSize = ((0.1f * width).toInt() / 2)  // BRUSH RADIUS
-
 
     enum class BrushTypes {
         circle,
         square
     }
-
-
     var currentBrushType = BrushTypes.circle;
 
+    fun updateBitmap(newBitmap: Bitmap){
+        _bitmap.value = newBitmap
+        width = newBitmap.width
+        height = newBitmap.height
+    }
 
     /**
      * Draws a pixel to the bitmap.

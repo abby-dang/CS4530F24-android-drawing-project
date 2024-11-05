@@ -1,5 +1,7 @@
 package com.example.drawingapp
 
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -31,7 +33,17 @@ class DrawingFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        val converter = BitmapConverter()
+        val bitmap = converter.toBitmap(arguments?.getByteArray("bitmap"))
+
         val viewModel: DrawingViewModel by viewModels()
+        if (bitmap != null) {
+            viewModel.updateBitmap(bitmap)
+        }
+        else {
+            viewModel.updateBitmap(Bitmap.createBitmap(40, 40, Bitmap.Config.ARGB_8888))
+        }
+
         val binding = FragmentDrawingBinding.inflate(layoutInflater, container, false)
 
         // Create a CanvasView with the view model in it
