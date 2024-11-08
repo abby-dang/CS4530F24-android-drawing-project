@@ -41,7 +41,7 @@
         android:layout_width="match_parent"
         android:layout_height="101dp"
         android:layout_marginTop="50dp"
-        android:text="Save Drawing Demo"
+        android:text="Save Drawing Demo (APPLE)"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -51,7 +51,7 @@
         android:layout_width="match_parent"
         android:layout_height="101dp"
         android:layout_marginTop="50dp"
-        android:text="Load Drawing Demo"
+        android:text="Load Drawing Demo (APPLE)"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
