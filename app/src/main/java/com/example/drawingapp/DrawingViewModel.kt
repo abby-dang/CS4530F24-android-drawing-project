@@ -13,7 +13,7 @@ import androidx.lifecycle.ViewModel
  * A view model that stores a bitmap representing the canvas as well
  * as pen properties
  */
-class DrawingViewModel: ViewModel() {
+class DrawingViewModel() : ViewModel() {
     private val _bitmap : MutableLiveData<Bitmap> = MutableLiveData()
     val bitmap : LiveData<Bitmap> get() = _bitmap
     private var width = 40
@@ -28,12 +28,14 @@ class DrawingViewModel: ViewModel() {
     }
     var currentBrushType = BrushTypes.circle;
 
-    fun updateBitmap(newBitmap: Bitmap){
+    fun updateBitmap(newBitmap: Bitmap) {
         Log.d("Update Bitmap", newBitmap.toString())
         _bitmap.value = newBitmap
         width = newBitmap.width
         height = newBitmap.height
     }
+
+    fun getBitmap() : Bitmap? = _bitmap.value
 
     /**
      * Draws a pixel to the bitmap.
@@ -87,12 +89,10 @@ class DrawingViewModel: ViewModel() {
         currentColor = Color.argb(255, Color.red(currentColor), Color.green(currentColor), Color.blue(currentColor))
     }
 
-
     fun setSquareBrush() {
         currentBrushType = BrushTypes.square;
         currentColor = Color.argb(255, Color.red(currentColor), Color.green(currentColor), Color.blue(currentColor))
     }
-
 
     fun setEraser() {
         currentBrushType = BrushTypes.square;
@@ -105,16 +105,13 @@ class DrawingViewModel: ViewModel() {
         currentSize = (((sizePercentage/100f) * (width/2)).toInt() / 2)
     }
 
-
     fun setColor(newColor: Int) {
         currentColor = Color.argb(Color.alpha(currentColor), Color.red(newColor), Color.green(newColor), Color.blue(newColor))
     }
 
-
     fun getSize(): Int {
         return currentSize;
     }
-
 
     fun getColor(): Int {
         return currentColor;

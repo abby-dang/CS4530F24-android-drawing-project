@@ -1,5 +1,6 @@
 package com.example.drawingapp
 
+import android.app.AlertDialog
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Color
@@ -22,6 +23,8 @@ import com.example.drawingapp.databinding.FragmentDrawingBinding
 class DrawingFragment : Fragment() {
 
     private val myViewModel : DrawingViewModel by viewModels()
+    private val selectDrawingViewModel: SelectDrawingViewModel by viewModels{
+        SelectDrawingViewModelFactory((requireActivity().application as DrawingApplication).drawingRepository)}
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,6 +56,25 @@ class DrawingFragment : Fragment() {
         // Setting navigation for back button
         binding.backButtonID.setOnClickListener{
             findNavController().navigate(R.id.action_back)
+        }
+        // Setting save button
+        binding.saveButtonID.setOnClickListener{
+            val drawingTitle = binding.fileNameEntry.text.toString()
+
+            if (drawingTitle.isBlank()) {
+                // Show the popup if title is empty
+                AlertDialog.Builder(requireContext())
+                    .setTitle("Save Failed")
+                    .setMessage("Your drawing is untitled. Please add a title to save.")
+                    .setNegativeButton("Close") { dialog, _ ->
+                        dialog.dismiss() // Close the dialog
+                    }
+                    .show()
+            } else {
+                myViewModel.getBitmap()
+                    ?.let { it1 -> selectDrawingViewModel.saveDrawing(it1, drawingTitle) }
+            }
+
         }
 
         // Set tool bar buttons

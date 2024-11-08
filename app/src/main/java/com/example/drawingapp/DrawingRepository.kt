@@ -12,7 +12,7 @@ class DrawingRepository(private val scope: CoroutineScope,
 
     fun saveNewDrawing(bitmap: Bitmap, fileName: String) {
         scope.launch {
-            dao.saveDrawing(DrawingData(bitmap, fileName))
+            dao.upsert(fileName, bitmap)
         }
     }
 

@@ -1,12 +1,15 @@
 package com.example.drawingapp
 
 import android.content.Context
+import android.graphics.Bitmap
 import androidx.room.Dao
 import androidx.room.Database
 import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.Transaction
 import androidx.room.TypeConverters
 import kotlinx.coroutines.flow.Flow
 
@@ -47,8 +50,23 @@ abstract class DrawingDatabase : RoomDatabase(){
 // This DAO provides data accessing functions to the repository.
 @Dao
 interface DrawingDAO {
+    @Query("SELECT COUNT(*) FROM drawings WHERE fileName = :name")
+    suspend fun checkIfExists(name: String): Int
+
+    @Query("UPDATE drawings SET bitmap = :newBitmap WHERE fileName = :name")
+    suspend fun updateDrawing(name: String, newBitmap: Bitmap)
+
     @Insert
     suspend fun saveDrawing(data: DrawingData)
+
+    @Transaction
+    suspend fun upsert(name: String, bitmap: Bitmap) {
+        if (checkIfExists(name) > 0) {
+            updateDrawing(name, bitmap)
+        } else {
+            saveDrawing(DrawingData(bitmap, name))
+        }
+    }
 
     @Query("SELECT * FROM drawings WHERE fileName = :name")
     suspend fun retrieveDrawing(name: String) : DrawingData

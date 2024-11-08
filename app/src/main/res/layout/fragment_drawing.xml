@@ -17,34 +17,20 @@
             android:id="@+id/backButtonID"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:text="Back" />
+
+        <EditText
+            android:id="@+id/fileNameEntry"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="Untitled" />
 
         <Button
             android:id="@+id/saveButtonID"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:text="Save" />
-
-        <Space
-            android:layout_width="52dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
-
-        <Button
-            android:id="@+id/undoButtonID"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Undo" />
-
-        <Button
-            android:id="@+id/redoButtonID"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Redo" />
 
     </LinearLayout>
 
