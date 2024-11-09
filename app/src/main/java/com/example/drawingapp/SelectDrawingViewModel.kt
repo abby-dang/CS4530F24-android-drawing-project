@@ -28,7 +28,7 @@ class SelectDrawingViewModel(private val repository: DrawingRepository) : ViewMo
     }
 
     fun getAllFileNames(): Flow<List<String>> {
-        return repository.getAllFileNames();
+        return repository.getAllFileNames()
     }
 }
 

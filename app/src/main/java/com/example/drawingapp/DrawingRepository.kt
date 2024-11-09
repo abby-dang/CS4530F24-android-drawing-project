@@ -26,10 +26,10 @@ class DrawingRepository(private val scope: CoroutineScope,
     }
 
     fun getNumDrawings(): Int {
-        return dao.getNumDrawings();
+        return dao.getNumDrawings()
     }
 
     fun getAllFileNames(): Flow<List<String>> {
-        return dao.retrieveAllFileName();
+        return dao.retrieveAllFileName()
     }
 }
