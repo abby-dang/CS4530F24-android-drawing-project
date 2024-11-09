@@ -3,6 +3,7 @@ package com.example.drawingapp
 import android.graphics.Bitmap
 import androidx.lifecycle.asLiveData
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
 class DrawingRepository(private val scope: CoroutineScope,
@@ -22,5 +23,13 @@ class DrawingRepository(private val scope: CoroutineScope,
         scope.launch {
             dao.clearDrawings()
         }
+    }
+
+    fun getNumDrawings(): Int {
+        return dao.getNumDrawings();
+    }
+
+    fun getAllFileNames(): Flow<List<String>> {
+        return dao.retrieveAllFileName();
     }
 }

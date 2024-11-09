@@ -3,11 +3,12 @@ plugins {
     alias(libs.plugins.kotlin.android)
     id("com.google.devtools.ksp")
     id("androidx.navigation.safeargs")
+    alias(libs.plugins.kotlin.compose)
 }
 
 android {
     namespace = "com.example.drawingapp"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.example.drawingapp"
@@ -37,6 +38,7 @@ android {
     }
     buildFeatures{
         viewBinding = true
+        compose = true;
     }
 }
 
@@ -51,7 +53,8 @@ dependencies {
     implementation(libs.androidx.lifecycle.livedata.ktx)
     implementation(libs.androidx.lifecycle.runtime.testing.android)
     implementation(libs.androidx.room.ktx)
-    implementation(libs.androidx.ui.desktop)
+
+    implementation(libs.androidx.material3.android)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -59,5 +62,6 @@ dependencies {
     implementation("androidx.fragment:fragment-ktx:1.5.6")
     implementation("androidx.core:core-splashscreen:1.0.0")
     implementation("androidx.room:room-runtime:2.6.1")
+    implementation("androidx.compose.ui:ui:1.7.5")
     ksp("androidx.room:room-compiler:2.6.1")
 }

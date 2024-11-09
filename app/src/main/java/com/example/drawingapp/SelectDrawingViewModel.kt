@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
 class SelectDrawingViewModel(private val repository: DrawingRepository) : ViewModel() {
@@ -24,6 +25,10 @@ class SelectDrawingViewModel(private val repository: DrawingRepository) : ViewMo
 
     fun clearDrawings() {
         repository.clearDAO()
+    }
+
+    fun getAllFileNames(): Flow<List<String>> {
+        return repository.getAllFileNames();
     }
 }
 

@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.ui.platform.ComposeView
 import androidx.navigation.fragment.findNavController
 import com.example.drawingapp.databinding.FragmentMainScreenBinding
 
@@ -23,6 +24,9 @@ class SelectDrawingScreenFragment : Fragment() {
     ): View {
         val binding = FragmentMainScreenBinding.inflate(layoutInflater, container, false)
 
+        binding.composeFileList.setContent {
+            FileItemList(viewModel, converter, findNavController())
+        }
         //setting up navigation for opening drawing screen MAY CHANGE LATER
         binding.newDrawingBtn.setOnClickListener{
             findNavController().navigate(R.id.action_open_drawing)
@@ -40,14 +44,14 @@ class SelectDrawingScreenFragment : Fragment() {
         }
 
         // This button demos loading a drawing.
-        binding.loadDrawingDemoBtn.setOnClickListener{
-            viewModel.loadDrawing("APPLE") { drawing ->
-                val bundle = Bundle().apply {
-                    putByteArray("bitmap", converter.fromBitmap(drawing))
-                }
-                findNavController().navigate(R.id.action_open_drawing, bundle)
-            }
-        }
+//        binding.loadDrawingDemoBtn.setOnClickListener{
+//            viewModel.loadDrawing("APPLE") { drawing ->
+//                val bundle = Bundle().apply {
+//                    putByteArray("bitmap", converter.fromBitmap(drawing))
+//                }
+//                findNavController().navigate(R.id.action_open_drawing, bundle)
+//            }
+//        }
 
         // This button clears the DAO for testing purposes.
         binding.clearDAOBtn.setOnClickListener{
