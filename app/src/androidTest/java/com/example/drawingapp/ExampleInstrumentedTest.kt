@@ -1,5 +1,7 @@
 package com.example.drawingapp
 
+import android.content.Context
+import android.graphics.Bitmap
 import android.graphics.Color
 import androidx.core.graphics.alpha
 import androidx.lifecycle.testing.TestLifecycleOwner
@@ -8,11 +10,14 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
-
+import androidx.room.Room
+import androidx.test.core.app.ApplicationProvider
+import org.junit.After
 import org.junit.Test
 import org.junit.runner.RunWith
-
 import org.junit.Assert.*
+import org.junit.Before
+import java.io.IOException
 
 /**
  * Instrumented test, which will execute on an Android device.
@@ -21,12 +26,82 @@ import org.junit.Assert.*
  */
 @RunWith(AndroidJUnit4::class)
 class ExampleInstrumentedTest {
+    private lateinit var drawingDao: DrawingDAO
+    private lateinit var db: DrawingDatabase
 
+    @Before
+    fun createDb() {
+        val context = ApplicationProvider.getApplicationContext<Context>()
+        db = Room.inMemoryDatabaseBuilder(
+            context, DrawingDatabase::class.java).build()
+        drawingDao = db.dao()
+    }
+
+    @After
+    @Throws(IOException::class)
+    fun closeDb() {
+        db.close()
+    }
     @Test
     fun useAppContext() {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
         assertEquals("com.example.drawingapp", appContext.packageName)
+    }
+
+
+    @Test
+    fun testDatabaseSave() {
+        val bitmap = Bitmap.createBitmap(40, 40, Bitmap.Config.ARGB_8888)
+        val drawingData = DrawingData(bitmap, "helloworld")
+        runBlocking {
+            val lifeCycleOwner = TestLifecycleOwner()
+            lifeCycleOwner.run {
+                withContext(Dispatchers.IO) {
+                    drawingDao.saveDrawing(drawingData)
+                    val findDrawing = drawingDao.checkIfExists("helloworld")
+                    val drawingExists = findDrawing > 0
+                    assertTrue(drawingExists)
+                }
+
+            }
+        }
+    }
+
+    @Test
+    fun testDatabaseDelete() {
+        val bitmap = Bitmap.createBitmap(40, 40, Bitmap.Config.ARGB_8888)
+        val drawingData = DrawingData(bitmap, "helloworld")
+        runBlocking {
+            val lifeCycleOwner = TestLifecycleOwner()
+            lifeCycleOwner.run {
+                withContext(Dispatchers.IO) {
+                    drawingDao.saveDrawing(drawingData)
+                    val prevNumDrawing = drawingDao.totalNumDrawings()
+                    drawingDao.deleteDrawing("helloworld")
+                    val currNumDrawing = drawingDao.totalNumDrawings()
+                    assertNotEquals(prevNumDrawing, currNumDrawing)
+                }
+
+            }
+        }
+    }
+
+    @Test
+    fun testDatabaseDataRetrieval() {
+        val bitmap = Bitmap.createBitmap(40, 40, Bitmap.Config.ARGB_8888)
+        val drawingData = DrawingData(bitmap, "helloworld")
+        runBlocking {
+            val lifeCycleOwner = TestLifecycleOwner()
+            lifeCycleOwner.run {
+                withContext(Dispatchers.IO) {
+                    drawingDao.saveDrawing(drawingData)
+                    val actualDrawingData = drawingDao.retrieveDrawing("helloworld")
+                    assertNotEquals(drawingData, actualDrawingData)
+                }
+
+            }
+        }
     }
 
     @Test
@@ -111,4 +186,5 @@ class ExampleInstrumentedTest {
 
         }
     }
+
 }

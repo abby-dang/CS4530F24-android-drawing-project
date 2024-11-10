@@ -82,5 +82,7 @@ interface DrawingDAO {
     @Query("SELECT fileName from drawings ORDER BY fileName ASC")
     fun retrieveAllFileName() : Flow<List<String>>
 
+    @Query("SELECT COUNT(*) FROM drawings")
+    fun totalNumDrawings(): Int
 
 }
