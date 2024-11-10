@@ -54,16 +54,13 @@ dependencies {
     implementation(libs.androidx.lifecycle.livedata.ktx)
     implementation(libs.androidx.lifecycle.runtime.testing.android)
     implementation(libs.androidx.room.ktx)
-
     implementation(libs.androidx.material3.android)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-
-
     debugImplementation("androidx.fragment:fragment-testing-manifest:$fragment_version")
     androidTestImplementation("androidx.fragment:fragment-testing:$fragment_version")
-
     androidTestImplementation("androidx.navigation:navigation-testing:2.8.3")
     androidTestImplementation ("androidx.test:runner:1.6.2")
     androidTestImplementation ("androidx.test:rules:1.6.1")
