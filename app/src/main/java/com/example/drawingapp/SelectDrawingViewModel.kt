@@ -16,8 +16,6 @@ class SelectDrawingViewModel(private val repository: DrawingRepository) : ViewMo
 
     val drawings: LiveData<List<DrawingData>> = repository.allDrawings;
     private val fileItemsState = MutableStateFlow<List<String>>(emptyList())
-    val fileItems: StateFlow<List<String>> = fileItemsState
-    val converter: BitmapConverter = BitmapConverter()
 
     init { //initializing mutablestateflow so UI can update accordingly
         viewModelScope.launch {
