@@ -17,6 +17,7 @@ class SelectDrawingViewModel(private val repository: DrawingRepository) : ViewMo
     val drawings: LiveData<List<DrawingData>> = repository.allDrawings;
     private val fileItemsState = MutableStateFlow<List<String>>(emptyList())
     val fileItems: StateFlow<List<String>> = fileItemsState
+    val converter: BitmapConverter = BitmapConverter()
 
     init { //initializing mutablestateflow so UI can update accordingly
         viewModelScope.launch {
@@ -30,6 +31,7 @@ class SelectDrawingViewModel(private val repository: DrawingRepository) : ViewMo
         repository.saveNewDrawing(bitmap, fileName)
     }
 
+
     fun loadDrawing(fileName: String, onResult: (Bitmap) -> Unit) {
         viewModelScope.launch {
             val drawing = repository.getDrawing(fileName)
@@ -37,14 +39,10 @@ class SelectDrawingViewModel(private val repository: DrawingRepository) : ViewMo
         }
     }
 
-    fun clearDrawings() {
-        repository.clearDAO()
+    //returns list of drawings
+    fun getAllDrawings() : Flow<List<DrawingData>> {
+        return repository.getAllDrawings()
     }
-
-    fun getAllFileNames(): Flow<List<String>> {
-        return repository.getAllFileNames()
-    }
-
     fun removeDrawing(fileName: String) {
         viewModelScope.launch(Dispatchers.IO) { //ran as a background thread
             try {

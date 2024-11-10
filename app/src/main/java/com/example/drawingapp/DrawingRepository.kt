@@ -25,15 +25,16 @@ class DrawingRepository(private val scope: CoroutineScope,
         }
     }
 
-    fun getNumDrawings(): Int {
-        return dao.getNumDrawings()
-    }
-
     fun getAllFileNames(): Flow<List<String>> {
         return dao.retrieveAllFileName()
     }
 
     suspend fun removeDrawing(fileName: String) {
         dao.deleteDrawing(fileName)
+    }
+
+
+    fun getAllDrawings(): Flow<List<DrawingData>> {
+        return dao.allDrawings()
     }
 }

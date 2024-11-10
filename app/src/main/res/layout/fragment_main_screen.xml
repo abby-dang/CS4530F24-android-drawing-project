@@ -16,7 +16,7 @@
             android:id="@+id/new_drawing_btn"
             android:layout_width="100dp"
             android:layout_height="50dp"
-            android:text="@string/open"/>
+            android:text="New"/>
         <Space
             android:layout_width="210dp"
             android:layout_height="match_parent"/>

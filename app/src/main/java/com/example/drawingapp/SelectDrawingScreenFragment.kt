@@ -23,6 +23,7 @@ class SelectDrawingScreenFragment : Fragment() {
     ): View {
         val binding = FragmentMainScreenBinding.inflate(layoutInflater, container, false)
 
+        //sets up composeview for composeUI
         binding.composeFileList.setContent {
             FileItemList(viewModel, converter, findNavController())
         }

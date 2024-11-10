@@ -8,7 +8,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 
-//file creates list view of fileitems
+//file creates list view of drawings
 @Composable
 fun FileItemList(
     viewModel: SelectDrawingViewModel,
@@ -16,13 +16,12 @@ fun FileItemList(
     navController: NavController,
     modifier: Modifier = Modifier
 ) {
-    val fileItem by viewModel.getAllFileNames().collectAsState(initial = emptyList())
-
+    val drawings by viewModel.getAllDrawings().collectAsState(initial = emptyList())
     LazyColumn(
         modifier = modifier
     ) {
-        items(fileItem) { file ->
-            FileItem(file, viewModel, converter,  navController, onClose = {viewModel.removeDrawing(file)})
+        items(drawings) { drawing ->
+            FileItem(drawing, viewModel, converter,  navController, onClose = {viewModel.removeDrawing(drawing.fileName)})
         }
     }
 }

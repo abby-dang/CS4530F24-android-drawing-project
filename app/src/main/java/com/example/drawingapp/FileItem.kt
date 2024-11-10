@@ -4,10 +4,8 @@ import android.os.Bundle
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
-import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
@@ -16,13 +14,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.size
+import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.graphics.painter.BitmapPainter
 
-//button items associated with a file name
+//defines drawing items for the main screen
 @Composable
 fun FileItem(
-    fileName: String,
+    drawing: DrawingData,
     viewModel: SelectDrawingViewModel,
     converter: BitmapConverter,
     navController: NavController,
@@ -32,23 +34,30 @@ fun FileItem(
     Row(
         modifier = modifier, verticalAlignment = Alignment.CenterVertically
     ){
-        Text(
-            text = fileName,
-            fontSize = 18.sp,
+
+        Image( //bitmap as png
+            painter = BitmapPainter(drawing.bitmap.asImageBitmap()),
+            contentDescription = drawing.fileName,
+            modifier = Modifier
+                .size(100.dp)
+                .aspectRatio(1f)
+                .clickable {
+                    viewModel.loadDrawing(drawing.fileName) { drawing ->
+                        val bundle = Bundle().apply {
+                            putByteArray("bitmap", converter.fromBitmap(drawing))
+                        }
+                        navController.navigate(R.id.action_open_drawing, bundle)
+                    }
+                }
+        )
+        Text( //file descriptor
+            text = drawing.fileName,
             color = Color.White,
             modifier = Modifier
                 .weight(1f)
-                .padding(start = 16.dp)
-                .clickable {
-                viewModel.loadDrawing(fileName) { drawing ->
-                    val bundle = Bundle().apply {
-                        putByteArray("bitmap", converter.fromBitmap(drawing))
-                    }
-                    navController.navigate(R.id.action_open_drawing, bundle)
-                }
-            }
+                .padding(16.dp)
         )
-        IconButton(
+        IconButton( //delete button
             onClick = onClose,
             modifier = Modifier
                 .padding(end = 8.dp)
@@ -58,9 +67,5 @@ fun FileItem(
     }
 }
 
-//Testing composable
-//@Composable
-//fun SomeText() {
-//    Text("hello world")
-//}
+
 

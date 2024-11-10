@@ -73,8 +73,8 @@ interface DrawingDAO {
     @Query("DELETE FROM drawings")
     suspend fun clearDrawings()
 
-    @Query("DELETE FROM drawings WHERE fileName = :itemName")
-    suspend fun deleteDrawing(itemName: String)
+    @Query("DELETE FROM drawings WHERE fileName = :name")
+    suspend fun deleteDrawing(name: String)
 
     @Query("SELECT * from drawings ORDER BY fileName ASC")
     fun allDrawings() : Flow<List<DrawingData>>
@@ -82,6 +82,5 @@ interface DrawingDAO {
     @Query("SELECT fileName from drawings ORDER BY fileName ASC")
     fun retrieveAllFileName() : Flow<List<String>>
 
-    @Query("SELECT COUNT(*) from drawings")
-    fun getNumDrawings(): Int
+
 }
