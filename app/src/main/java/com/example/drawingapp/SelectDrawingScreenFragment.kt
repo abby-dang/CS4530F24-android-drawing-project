@@ -36,27 +36,6 @@ class SelectDrawingScreenFragment : Fragment() {
             findNavController().navigate(R.id.action_open_cloud)
         }
 
-        // This button is just here to demo that the saving file works.
-        binding.saveDrawingDemoBtn.setOnClickListener{
-            // This is an example of how to save a drawing to the data base.
-            viewModel.saveDrawing(Bitmap.createBitmap(40, 40, Bitmap.Config.ARGB_8888), "APPLE")
-        }
-
-        // This button demos loading a drawing.
-//        binding.loadDrawingDemoBtn.setOnClickListener{
-//            viewModel.loadDrawing("APPLE") { drawing ->
-//                val bundle = Bundle().apply {
-//                    putByteArray("bitmap", converter.fromBitmap(drawing))
-//                }
-//                findNavController().navigate(R.id.action_open_drawing, bundle)
-//            }
-//        }
-
-        // This button clears the DAO for testing purposes.
-        binding.clearDAOBtn.setOnClickListener{
-            viewModel.clearDrawings()
-        }
-
          // This is where you can update the list of drawings selectable.
 //         viewModel.drawings.observe(viewLifecycleOwner){
 //         }

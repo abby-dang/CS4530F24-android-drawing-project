@@ -22,7 +22,7 @@ fun FileItemList(
         modifier = modifier
     ) {
         items(fileItem) { file ->
-            FileItem(file, viewModel, converter,  navController)
+            FileItem(file, viewModel, converter,  navController, onClose = {viewModel.removeDrawing(file)})
         }
     }
 }

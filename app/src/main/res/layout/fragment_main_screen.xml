@@ -31,40 +31,10 @@
     <TextView
         android:layout_width="300dp"
         android:layout_height="50dp"
-        android:text="@string/main_screen"
+        android:text="Your Artwork"
         android:textSize ="30sp"
         android:layout_gravity="center"
         android:textAlignment="center"/>
-
-    <Button
-        android:id="@+id/saveDrawingDemoBtn"
-        android:layout_width="match_parent"
-        android:layout_height="101dp"
-        android:layout_marginTop="50dp"
-        android:text="Save Drawing Demo (APPLE)"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-<!--    <Button-->
-<!--        android:id="@+id/loadDrawingDemoBtn"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="101dp"-->
-<!--        android:layout_marginTop="50dp"-->
-<!--        android:text="Load Drawing Demo (APPLE)"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent" />-->
-
-    <Button
-        android:id="@+id/clearDAOBtn"
-        android:layout_width="match_parent"
-        android:layout_height="101dp"
-        android:layout_marginTop="154dp"
-        android:text="Clear DAO (Testing Only)"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.compose.ui.platform.ComposeView
         android:id="@+id/composeFileList"
