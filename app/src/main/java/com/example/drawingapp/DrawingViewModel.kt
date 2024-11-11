@@ -65,6 +65,7 @@ class DrawingViewModel() : ViewModel() {
                     (xMapping + i < width) && (yMapping + j < height) &&
                     (xMapping + i >= 0) && (yMapping + j >= 0)) {
                     _bitmap.value?.setPixel(xMapping + i, yMapping + j, currentColor)
+                    _bitmap.value = _bitmap.value
                 }
             }
         }
@@ -78,6 +79,7 @@ class DrawingViewModel() : ViewModel() {
                     (xMapping + i >= 0) && (yMapping + j >= 0)
                 ) {
                     _bitmap.value?.setPixel(xMapping + i, yMapping + j, currentColor)
+                    _bitmap.value = _bitmap.value
                 }
             }
         }
