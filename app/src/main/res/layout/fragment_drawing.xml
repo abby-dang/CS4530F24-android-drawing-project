@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#232323"
+    android:background="@color/grey"
     android:orientation="vertical"
     tools:context=".DrawingFragment">
 
@@ -24,7 +24,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:hint="Untitled" />
+            android:hint="Untitled"
+            android:textColor="#FFFFFF" />
 
         <Button
             android:id="@+id/saveButtonID"
@@ -39,6 +40,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+
         <LinearLayout
             android:id="@+id/toolBarInterior"
             android:layout_width="match_parent"
@@ -71,8 +73,9 @@
             android:id="@+id/sizeDisplayID"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textAlignment="center"
-            android:text="20%" />
+            android:text="20%"
+            android:textAlignment="center" />
+
         <SeekBar
             android:id="@+id/sizeBarID"
             android:layout_width="match_parent"
@@ -89,23 +92,25 @@
         android:id="@+id/colorBarID"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="horizontal"
         android:layout_marginHorizontal="10dp"
-        android:layout_marginVertical="10dp">
+        android:layout_marginVertical="10dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
         <View
             android:id="@+id/currentColorDisplay"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:background="@android:color/black" />
+
         <GridView
             android:id="@+id/colorGridView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:numColumns="5"
+            android:layout_marginHorizontal="10dp"
             android:horizontalSpacing="5dp"
-            android:verticalSpacing="5dp"
-            android:layout_marginHorizontal="10dp" />
+            android:numColumns="5"
+            android:verticalSpacing="5dp" />
 
     </LinearLayout>
 

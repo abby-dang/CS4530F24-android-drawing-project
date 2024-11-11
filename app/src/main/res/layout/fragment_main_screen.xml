@@ -28,13 +28,15 @@
             android:text="@string/cloud"/>
 
     </LinearLayout>
+
     <TextView
         android:layout_width="300dp"
         android:layout_height="50dp"
-        android:text="Your Artwork"
-        android:textSize ="30sp"
         android:layout_gravity="center"
-        android:textAlignment="center"/>
+        android:text="Your Artwork"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        android:textSize="30sp" />
 
     <androidx.compose.ui.platform.ComposeView
         android:id="@+id/composeFileList"
