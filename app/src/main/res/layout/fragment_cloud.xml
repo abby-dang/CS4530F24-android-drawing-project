@@ -13,11 +13,8 @@
         android:text="@string/x"
         android:textSize="20sp"/>
 
-    <TextView
+    <androidx.compose.ui.platform.ComposeView
+        android:id="@+id/loginView"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:text="@string/cloud"
-        android:textSize="30sp"
-        android:textAlignment="center"
-        android:layout_gravity="center"/>
+        android:layout_height="match_parent" />
 </LinearLayout>

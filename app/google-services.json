@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "797111578326",
+    "project_id": "drawing-app---hip-hip-array",
+    "storage_bucket": "drawing-app---hip-hip-array.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:797111578326:android:8c16f1be6c086c1743a377",
+        "android_client_info": {
+          "package_name": "com.example.drawingapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBmzyx990GY_QXOJCsKppvriQcDDAnU1tc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

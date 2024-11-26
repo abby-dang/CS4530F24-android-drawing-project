@@ -4,6 +4,7 @@ plugins {
     id("com.google.devtools.ksp")
     id("androidx.navigation.safeargs")
     alias(libs.plugins.kotlin.compose)
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -43,6 +44,7 @@ android {
 }
 
 dependencies {
+    implementation(libs.firebase.auth.ktx)
     val fragment_version = "1.8.5"
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
@@ -72,4 +74,6 @@ dependencies {
     implementation("androidx.compose.ui:ui:1.7.5")
 
     ksp("androidx.room:room-compiler:2.6.1")
+
+    implementation(platform("com.google.firebase:firebase-bom:33.6.0"))
 }
