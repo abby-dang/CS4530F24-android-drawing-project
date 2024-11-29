@@ -18,6 +18,7 @@ import androidx.navigation.NavController
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.size
+import androidx.compose.material.icons.filled.Share
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.painter.BitmapPainter
 
@@ -57,6 +58,13 @@ fun FileItem(
                 .weight(1f)
                 .padding(16.dp)
         )
+        IconButton(//share Button
+            onClick = onClose,
+            modifier = Modifier
+                .padding(end = 8.dp)
+        ) {
+            Icon(Icons.Filled.Share, contentDescription = "Cloud")
+        }
         IconButton( //delete button
             onClick = onClose,
             modifier = Modifier
@@ -64,6 +72,7 @@ fun FileItem(
         ) {
             Icon(Icons.Filled.Close, contentDescription = "Close")
         }
+
     }
 }
 

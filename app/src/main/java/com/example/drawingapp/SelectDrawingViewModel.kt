@@ -11,6 +11,12 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import com.google.firebase.Firebase
+import com.google.firebase.auth.auth
+import com.google.firebase.firestore.firestore
+import com.google.firebase.storage.StorageReference
+import kotlin.coroutines.resume
+import kotlin.coroutines.suspendCoroutine
 
 class SelectDrawingViewModel(private val repository: DrawingRepository) : ViewModel() {
 
@@ -48,6 +54,22 @@ class SelectDrawingViewModel(private val repository: DrawingRepository) : ViewMo
             } catch (e:Exception) {
                 Log.e("SelectDrawingViewModel", "error removing file")
             }
+        }
+    }
+
+    suspend fun uploadData(ref: StorageReference, path: String, data: ByteArray): Boolean {
+        val fileRef = ref.child(path)
+        return suspendCoroutine { continuation ->
+            val uploadTask = fileRef.putBytes(data)
+            uploadTask
+                .addOnFailureListener { e ->
+                    Log.e("PICUPLOAD", "Failed !$e")
+                    continuation.resume(false)
+                }
+                .addOnSuccessListener {
+                    Log.d("PICUPLOAD", "success")
+                    continuation.resume(true)
+                }
         }
     }
 }

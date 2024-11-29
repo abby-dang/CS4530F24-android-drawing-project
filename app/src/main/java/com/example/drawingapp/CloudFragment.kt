@@ -25,8 +25,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.lifecycle.lifecycleScope
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.firestore
+import kotlinx.coroutines.launch
+import java.util.Date
+import kotlin.coroutines.resume
+import kotlin.coroutines.suspendCoroutine
 
 class CloudFragment : Fragment() {
 
@@ -117,24 +125,64 @@ class CloudFragment : Fragment() {
                                 .addOnCompleteListener(requireActivity()) { task ->
                                     if (task.isSuccessful) {
                                         user = Firebase.auth.currentUser
+                                        val document = mapOf(
+                                            "uid" to user!!.uid,
+                                            "name" to "",
+                                            "time" to Date()
+                                        )
+                                        lifecycleScope.launch {
+                                            uploadDocument(user!!.uid, document)
+                                        }
                                     } else {
                                         Log.e("AUTHENTICATION ERROR", "${task.exception}")
                                     }
                                 }
+
+
                         },
                         modifier = Modifier.weight(1f)
                     ) {
                         Text("Sign Up")
                     }
+
+
                 }
             } else {
-                Button(onClick = {
-                    Firebase.auth.signOut()
-                    user = null
-                }) {
-                    Text("Sign Out")
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(16.dp),
+                    verticalArrangement = Arrangement.Center
+                ) {
+                    Text("Welcome back",
+                        color = Color.White,
+                        fontSize = 30.sp)
+
+                    Button(onClick = {
+                        Firebase.auth.signOut()
+                        user = null
+                    }) {
+                        Text("Sign Out")
+                    }
                 }
+
             }
+        }
+    }
+
+    suspend fun uploadDocument(id: String, document: Any) {
+        val db = FirebaseFirestore.getInstance()
+        suspendCoroutine { continuation ->
+            db.collection("users/").document(id)
+                .set(document)
+                .addOnSuccessListener {
+                    Log.e("UPLOAD", "SUCCESSFUL!")
+                    continuation.resume(Unit)
+                }
+                .addOnFailureListener {
+                        e -> Log.e("UPLOAD", "FAILED!: $e")
+                    continuation.resume(Unit)
+                }
         }
     }
 }
