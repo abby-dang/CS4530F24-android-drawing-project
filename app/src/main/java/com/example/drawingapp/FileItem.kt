@@ -1,6 +1,5 @@
 package com.example.drawingapp
 
-import android.graphics.Bitmap
 import android.os.Bundle
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
@@ -31,7 +30,6 @@ import androidx.compose.ui.graphics.painter.BitmapPainter
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
 import com.google.firebase.storage.storage
-import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.launch
 
 //defines drawing items for the main screen
