@@ -19,7 +19,6 @@ import androidx.navigation.fragment.findNavController
 import com.example.drawingapp.databinding.FragmentCloudBinding
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
-import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.Color
@@ -30,7 +29,6 @@ import androidx.lifecycle.lifecycleScope
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.firestore
 import kotlinx.coroutines.launch
 import java.util.Date
 import kotlin.coroutines.resume
@@ -153,7 +151,7 @@ class CloudFragment : Fragment() {
                 var name = ""
                 userInfo.get().addOnSuccessListener { document ->
                     if(document != null && document.exists()) {
-                        name = document.getString("name").toString();
+                        name = document.getString("name").toString()
                     }
                 }
                 Column(

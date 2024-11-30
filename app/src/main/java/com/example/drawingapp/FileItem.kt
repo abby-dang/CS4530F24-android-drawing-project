@@ -81,7 +81,7 @@ fun FileItem(
                                 "${user!!.uid}/" + drawing.fileName + ".png",
                                 viewModel.bitmapToByteArray(drawing.bitmap)
                             )) {
-                            successfulPicUpload = true; //cues the icon to change
+                            successfulPicUpload = true//cues the icon to change
                         }
 
                     }

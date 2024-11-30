@@ -23,7 +23,6 @@ fun FileItemList(
         modifier = modifier
     ) {
         items(drawings) { drawing ->
-            val byteArr = viewModel.bitmapToByteArray(drawing.bitmap)
             FileItem(drawing, viewModel, converter,  navController,
                 onClose = {viewModel.removeDrawing(drawing.fileName)}
             )

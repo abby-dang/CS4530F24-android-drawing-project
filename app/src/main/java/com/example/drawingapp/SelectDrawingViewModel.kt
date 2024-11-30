@@ -20,9 +20,7 @@ import kotlin.coroutines.suspendCoroutine
 
 class SelectDrawingViewModel(private val repository: DrawingRepository) : ViewModel() {
 
-    val drawings: LiveData<List<DrawingData>> = repository.allDrawings;
     private val fileItemsState = MutableStateFlow<List<String>>(emptyList())
-    private val firebaseDB = FirebaseFirestore.getInstance()
 
     init { //initializing mutablestateflow so UI can update accordingly
         viewModelScope.launch {
@@ -74,7 +72,7 @@ class SelectDrawingViewModel(private val repository: DrawingRepository) : ViewMo
         Uploads byteArray to the cloud storage
      */
     suspend fun uploadData(ref: StorageReference, path: String, data: ByteArray): Boolean {
-        val fileRef = Firebase.storage.reference.child(path)
+        val fileRef = ref.child(path)
         return suspendCoroutine { continuation ->
             val uploadTask = fileRef.putBytes(data)
             uploadTask
