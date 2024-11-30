@@ -148,13 +148,22 @@ class CloudFragment : Fragment() {
 
                 }
             } else {
+                val db = FirebaseFirestore.getInstance()
+                val userInfo = db.collection("users").document(user!!.uid)
+                var name = ""
+                userInfo.get().addOnSuccessListener { document ->
+                    if(document != null && document.exists()) {
+                        name = document.getString("name").toString();
+                    }
+                }
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(16.dp),
                     verticalArrangement = Arrangement.Center
                 ) {
-                    Text("Welcome back",
+
+                    Text("Welcome back " + name,
                         color = Color.White,
                         fontSize = 30.sp)
 

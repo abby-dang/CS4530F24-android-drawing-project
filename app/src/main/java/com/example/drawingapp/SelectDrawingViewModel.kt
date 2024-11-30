@@ -13,8 +13,11 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.firestore
 import com.google.firebase.storage.StorageReference
+import com.google.firebase.storage.storage
+import java.io.ByteArrayOutputStream
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
@@ -22,6 +25,7 @@ class SelectDrawingViewModel(private val repository: DrawingRepository) : ViewMo
 
     val drawings: LiveData<List<DrawingData>> = repository.allDrawings;
     private val fileItemsState = MutableStateFlow<List<String>>(emptyList())
+    private val firebaseDB = FirebaseFirestore.getInstance()
 
     init { //initializing mutablestateflow so UI can update accordingly
         viewModelScope.launch {
@@ -47,6 +51,9 @@ class SelectDrawingViewModel(private val repository: DrawingRepository) : ViewMo
     fun getAllDrawings() : Flow<List<DrawingData>> {
         return repository.getAllDrawings()
     }
+    /*
+        removes drawing from the database
+     */
     fun removeDrawing(fileName: String) {
         viewModelScope.launch(Dispatchers.IO) { //ran as a background thread
             try {
@@ -57,8 +64,20 @@ class SelectDrawingViewModel(private val repository: DrawingRepository) : ViewMo
         }
     }
 
+    /*
+        function that turns bitmap to a byteArray
+     */
+    fun bitmapToByteArray(bitmap: Bitmap): ByteArray {
+        val byteArrayOutputStream = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream)
+        return byteArrayOutputStream.toByteArray()
+    }
+
+    /*
+        Uploads byteArray to the cloud storage
+     */
     suspend fun uploadData(ref: StorageReference, path: String, data: ByteArray): Boolean {
-        val fileRef = ref.child(path)
+        val fileRef = Firebase.storage.reference.child(path)
         return suspendCoroutine { continuation ->
             val uploadTask = fileRef.putBytes(data)
             uploadTask
