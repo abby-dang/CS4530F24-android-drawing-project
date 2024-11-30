@@ -18,12 +18,24 @@ import androidx.navigation.NavController
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.size
+import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.Share
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.painter.BitmapPainter
+import com.google.firebase.Firebase
+import com.google.firebase.auth.auth
+import com.google.firebase.storage.storage
+import kotlinx.coroutines.launch
 
 //defines drawing items for the main screen
 @Composable
 fun FileItem(
+
     drawing: DrawingData,
     viewModel: SelectDrawingViewModel,
     converter: BitmapConverter,
@@ -31,6 +43,9 @@ fun FileItem(
     onClose : () -> Unit,
     modifier: Modifier = Modifier
 ) {
+    val coroutineScope = rememberCoroutineScope()
+    val user by remember { mutableStateOf(Firebase.auth.currentUser) }
+    var successfulPicUpload by remember {mutableStateOf(false)} // used for picture upload
     Row(
         modifier = modifier, verticalAlignment = Alignment.CenterVertically
     ){
@@ -57,13 +72,40 @@ fun FileItem(
                 .weight(1f)
                 .padding(16.dp)
         )
+
+        IconButton(//Upload Button
+            onClick = {
+                    coroutineScope.launch {
+                        if(viewModel.uploadData(
+                                Firebase.storage.reference,
+                                "${user!!.uid}/" + drawing.fileName + ".png",
+                                viewModel.bitmapToByteArray(drawing.bitmap)
+                            )) {
+                            successfulPicUpload = true//cues the icon to change
+                        }
+
+                    }
+                },
+            modifier = Modifier
+                .padding(end = 8.dp)
+        ) {
+            if(successfulPicUpload) {
+                Icon(Icons.Filled.Check, contentDescription = "Successful Upload",
+                    tint = Color.White)
+            } else {
+                Icon(Icons.Filled.Share, contentDescription = "Cloud",
+                    tint = Color.White)
+            }
+        }
         IconButton( //delete button
             onClick = onClose,
             modifier = Modifier
                 .padding(end = 8.dp)
         ) {
-            Icon(Icons.Filled.Close, contentDescription = "Close")
+            Icon(Icons.Filled.Close, contentDescription = "Close",
+                tint = Color.White)
         }
+
     }
 }
 

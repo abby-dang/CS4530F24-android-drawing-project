@@ -45,6 +45,8 @@ android {
 
 dependencies {
     implementation(libs.firebase.auth.ktx)
+    implementation(libs.firebase.firestore.ktx)
+    implementation(libs.firebase.storage.ktx)
     val fragment_version = "1.8.5"
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
@@ -72,7 +74,7 @@ dependencies {
     implementation("androidx.core:core-splashscreen:1.0.0")
     implementation("androidx.room:room-runtime:2.6.1")
     implementation("androidx.compose.ui:ui:1.7.5")
-
+    implementation("androidx.lifecycle:lifecycle-runtime-compose:$2.8.7")
     ksp("androidx.room:room-compiler:2.6.1")
 
     implementation(platform("com.google.firebase:firebase-bom:33.6.0"))

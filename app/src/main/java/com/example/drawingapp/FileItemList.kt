@@ -8,6 +8,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 
+
+
 //file creates list view of drawings
 @Composable
 fun FileItemList(
@@ -21,7 +23,9 @@ fun FileItemList(
         modifier = modifier
     ) {
         items(drawings) { drawing ->
-            FileItem(drawing, viewModel, converter,  navController, onClose = {viewModel.removeDrawing(drawing.fileName)})
+            FileItem(drawing, viewModel, converter,  navController,
+                onClose = {viewModel.removeDrawing(drawing.fileName)}
+            )
         }
     }
 }
