@@ -1,5 +1,6 @@
 package com.example.drawingapp
 
+import android.util.Log
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
@@ -7,6 +8,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
+import androidx.navigation.fragment.findNavController
 import kotlinx.coroutines.flow.StateFlow
 
 
@@ -37,6 +39,25 @@ fun FileItemList(
                     onClose = { viewModel.removeDrawing(drawing.fileName) }
                 )
             }
+        }
+    }
+}
+
+@Composable
+fun DownloadableList(
+    cloudData: StateFlow<List<DrawingData>>,
+    modifier: Modifier = Modifier
+) {
+    val cloudDrawings by cloudData.collectAsState(initial = emptyList())
+
+    Log.d("DOWNLOAD", "RETRIEVING LIST...")
+
+    LazyColumn(
+        modifier = modifier
+    ) {
+        items(cloudDrawings) { drawing ->
+            Log.d("DOWNLOAD", "LOOPING...")
+            DownloadableItem(drawing)
         }
     }
 }

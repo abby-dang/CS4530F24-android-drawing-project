@@ -141,5 +141,56 @@ fun FileItem(
     }
 }
 
+@Composable
+fun DownloadableItem(
+    drawing: DrawingData,
+    modifier: Modifier = Modifier
+) {
+    val coroutineScope = rememberCoroutineScope()
+    var successfulPicDownload by remember {mutableStateOf(false)} // used for picture download
+    Row(
+        modifier = modifier, verticalAlignment = Alignment.CenterVertically
+    ){
+
+        Image( //bitmap as png
+            painter = BitmapPainter(drawing.bitmap.asImageBitmap()),
+            contentDescription = drawing.fileName,
+            modifier = Modifier
+                .size(100.dp)
+                .aspectRatio(1f)
+        )
+        Text( //file descriptor
+            text = drawing.fileName,
+            color = Color.White,
+            modifier = Modifier
+                .weight(1f)
+                .padding(16.dp)
+        )
+
+        IconButton( //Download Button
+            onClick = {
+                    coroutineScope.launch {
+                        // DOWNLOAD PIC
+                        successfulPicDownload = true //cues the icon to change
+                    }
+                },
+            modifier = Modifier
+                .padding(end = 8.dp)
+        ) {
+            if (successfulPicDownload) {
+                Icon(
+                    Icons.Filled.Check, contentDescription = "Successful Download",
+                    tint = Color.White
+                )
+            } else {
+                Icon(
+                    Icons.Filled.Add, contentDescription = "Download",
+                    tint = Color.White
+                )
+            }
+        }
+    }
+}
+
 
 

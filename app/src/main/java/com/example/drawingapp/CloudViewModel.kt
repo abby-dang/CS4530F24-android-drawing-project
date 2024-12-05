@@ -1,6 +1,7 @@
 package com.example.drawingapp
 
 import android.graphics.Bitmap
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -24,6 +25,14 @@ class CloudViewModel : ViewModel() {
     private val _dataList = MutableStateFlow<List<DrawingData>>(emptyList())
     val cloudDrawings: StateFlow<List<DrawingData>> = _dataList
 
+    init {
+        viewModelScope.launch {
+            downloadDocument().collect { data ->
+                _dataList.value = data
+            }
+        }
+    }
+
     fun downloadDocument(): Flow<List<DrawingData>> = callbackFlow {
         val storage = FirebaseStorage.getInstance()
         val user = FirebaseAuth.getInstance().currentUser
@@ -32,6 +41,7 @@ class CloudViewModel : ViewModel() {
             return@callbackFlow
 
         val storageReference: StorageReference = storage.reference.child("${user.uid}/")
+        Log.d("DOWNLOAD", "DOWNLOADING...")
 
         try {
             // List all items (files) in the specified storage folder
@@ -48,6 +58,8 @@ class CloudViewModel : ViewModel() {
                 val bitmap = converter.toBitmap(bytes)
                 val name = item.name
 
+                Log.d("DOWNLOAD", item.name)
+
                 if (bitmap != null) {
                     dataList.add(DrawingData(bitmap, name))
                 }
@@ -60,6 +72,7 @@ class CloudViewModel : ViewModel() {
                 }
             }
         } catch (e: Exception) {
+            Log.d("DOWNLOAD", "DOWNLOAD FAILED.")
             close(e) // Close the flow if there is an error
         }
 

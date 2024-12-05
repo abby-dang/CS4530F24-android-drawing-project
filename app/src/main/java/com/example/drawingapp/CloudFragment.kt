@@ -67,7 +67,6 @@ class CloudFragment : Fragment() {
         return binding.root
     }
 
-
     @Composable
     fun LoginView() {
         var user by rememberSaveable { mutableStateOf(Firebase.auth.currentUser) }
@@ -157,6 +156,9 @@ class CloudFragment : Fragment() {
 
                 }
             } else {
+                val myViewModel: CloudViewModel by viewModels()
+                val list = myViewModel.cloudDrawings
+
                 val db = FirebaseFirestore.getInstance()
                 val userInfo = db.collection("users").document(user!!.uid)
                 var name = ""
@@ -183,6 +185,10 @@ class CloudFragment : Fragment() {
                     }) {
                         Text("Sign Out")
                     }
+
+                    Log.d("DOWNLOAD", "LOGGED IN!")
+                    DownloadableList(list)
+
                 }
 
             }
