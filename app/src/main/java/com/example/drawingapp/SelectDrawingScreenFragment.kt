@@ -1,15 +1,15 @@
 package com.example.drawingapp
 
-import android.graphics.Bitmap
 import androidx.fragment.app.viewModels
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.compose.ui.platform.ComposeView
 import androidx.navigation.fragment.findNavController
 import com.example.drawingapp.databinding.FragmentMainScreenBinding
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 
 class SelectDrawingScreenFragment : Fragment() {
 
@@ -25,7 +25,7 @@ class SelectDrawingScreenFragment : Fragment() {
 
         //sets up composeview for composeUI
         binding.composeFileList.setContent {
-            FileItemList(viewModel, converter, findNavController())
+            FileItemList(viewModel, MutableStateFlow(emptyList()), converter, findNavController(), true)
         }
         //setting up navigation for opening drawing screen MAY CHANGE LATER
         binding.newDrawingBtn.setOnClickListener{

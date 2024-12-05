@@ -14,18 +14,20 @@
         android:orientation="horizontal">
         <Button
             android:id="@+id/new_drawing_btn"
-            android:layout_width="100dp"
+            android:layout_width="1dp"
             android:layout_height="50dp"
+            android:layout_weight="1"
             android:text="New"/>
         <Space
-            android:layout_width="210dp"
+            android:layout_width="1dp"
+            android:layout_weight="1.5"
             android:layout_height="match_parent"/>
-
         <Button
             android:id="@+id/openCloudBtn"
-            android:layout_width="100dp"
+            android:layout_width="1dp"
             android:layout_height="50dp"
-            android:text="@string/cloud"/>
+            android:layout_weight="1"
+            android:text="Cloud"/>
 
     </LinearLayout>
 

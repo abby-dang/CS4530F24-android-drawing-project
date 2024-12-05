@@ -26,6 +26,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.viewModelScope
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -36,13 +37,18 @@ import kotlin.coroutines.suspendCoroutine
 
 class CloudFragment : Fragment() {
 
-    private val viewModel: CloudViewModel by viewModels()
+    private val converter = BitmapConverter()
+    private val myViewModel: CloudViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         val binding = FragmentCloudBinding.inflate(layoutInflater, container, false)
+        val viewModel: SelectDrawingViewModel by viewModels{
+            SelectDrawingViewModelFactory((requireActivity().application as DrawingApplication).drawingRepository)}
+
+        val drawings = myViewModel.cloudDrawings
 
         //setting navigation on back button
         binding.backBtn.setOnClickListener {
@@ -51,6 +57,11 @@ class CloudFragment : Fragment() {
 
         binding.loginView.setContent {
             LoginView()
+        }
+
+        //sets up composeview for composeUI
+        binding.cloudFileList.setContent {
+            FileItemList(viewModel, drawings, converter, findNavController(), false)
         }
 
         return binding.root
@@ -154,6 +165,7 @@ class CloudFragment : Fragment() {
                         name = document.getString("name").toString()
                     }
                 }
+                myViewModel.downloadDocument()
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
@@ -161,7 +173,7 @@ class CloudFragment : Fragment() {
                     verticalArrangement = Arrangement.Center
                 ) {
 
-                    Text("Welcome back " + name,
+                    Text("Welcome back ${name}",
                         color = Color.White,
                         fontSize = 30.sp)
 
@@ -192,4 +204,5 @@ class CloudFragment : Fragment() {
                 }
         }
     }
+
 }

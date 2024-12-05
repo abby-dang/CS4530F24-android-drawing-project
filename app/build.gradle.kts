@@ -76,6 +76,7 @@ dependencies {
     implementation("androidx.compose.ui:ui:1.7.5")
     implementation("androidx.lifecycle:lifecycle-runtime-compose:$2.8.7")
     ksp("androidx.room:room-compiler:2.6.1")
+    implementation("com.google.firebase:firebase-appcheck-safetynet:16.0.0")
 
     implementation(platform("com.google.firebase:firebase-bom:33.6.0"))
 }
