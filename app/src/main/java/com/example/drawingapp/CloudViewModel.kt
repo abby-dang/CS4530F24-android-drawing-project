@@ -66,11 +66,7 @@ class CloudViewModel : ViewModel() {
             }
 
             trySend(dataList) // Send the list of Bitmaps to the Flow
-            launch {
-                downloadDocument().collect { data ->
-                    _dataList.value = data
-                }
-            }
+
         } catch (e: Exception) {
             Log.d("DOWNLOAD", "DOWNLOAD FAILED.")
             close(e) // Close the flow if there is an error
