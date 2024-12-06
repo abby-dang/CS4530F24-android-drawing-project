@@ -30,6 +30,7 @@ import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.launch
+import java.io.IOException
 import java.util.Date
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
@@ -165,7 +166,7 @@ class CloudFragment : Fragment() {
                         name = document.getString("name").toString()
                     }
                 }
-                myViewModel.downloadDocument()
+
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
