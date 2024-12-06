@@ -2,7 +2,6 @@ package com.example.drawingapp
 
 import android.graphics.Bitmap
 import android.util.Log
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
@@ -10,15 +9,12 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
-import com.google.firebase.Firebase
-import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.StorageReference
-import com.google.firebase.storage.storage
 import java.io.ByteArrayOutputStream
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
-class SelectDrawingViewModel(private val repository: DrawingRepository) : ViewModel() {
+class SelectDrawingViewModel(val repository: DrawingRepository) : ViewModel() {
 
     private val fileItemsState = MutableStateFlow<List<String>>(emptyList())
 

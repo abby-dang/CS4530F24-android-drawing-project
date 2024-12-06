@@ -8,7 +8,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
-import androidx.navigation.fragment.findNavController
 import kotlinx.coroutines.flow.StateFlow
 
 
@@ -16,29 +15,18 @@ import kotlinx.coroutines.flow.StateFlow
 @Composable
 fun FileItemList(
     viewModel: SelectDrawingViewModel,
-    cloudData: StateFlow<List<DrawingData>>,
     converter: BitmapConverter,
     navController: NavController,
-    upload: Boolean,
     modifier: Modifier = Modifier
 ) {
     val drawings by viewModel.getAllDrawings().collectAsState(initial = emptyList())
-    val cloudDrawings by cloudData.collectAsState(initial = emptyList())
     LazyColumn(
         modifier = modifier
     ) {
-        if (upload) {
-            items(drawings) { drawing ->
-                FileItem(drawing, viewModel, converter, navController, upload,
-                    onClose = { viewModel.removeDrawing(drawing.fileName) }
-                )
-            }
-        } else {
-            items(cloudDrawings) { drawing ->
-                FileItem(drawing, viewModel, converter, navController, upload,
-                    onClose = { viewModel.removeDrawing(drawing.fileName) }
-                )
-            }
+        items(drawings) { drawing ->
+            FileItem(drawing, viewModel, converter, navController,
+                onClose = { viewModel.removeDrawing(drawing.fileName) }
+            )
         }
     }
 }
@@ -46,6 +34,7 @@ fun FileItemList(
 @Composable
 fun DownloadableList(
     cloudData: StateFlow<List<DrawingData>>,
+    repo: DrawingRepository,
     modifier: Modifier = Modifier
 ) {
     val cloudDrawings by cloudData.collectAsState(initial = emptyList())
@@ -57,7 +46,7 @@ fun DownloadableList(
     ) {
         items(cloudDrawings) { drawing ->
             Log.d("DOWNLOAD", "LOOPING...")
-            DownloadableItem(drawing)
+            DownloadableItem(drawing, repo)
         }
     }
 }

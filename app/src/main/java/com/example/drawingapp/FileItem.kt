@@ -2,12 +2,10 @@ package com.example.drawingapp
 
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
@@ -31,11 +29,11 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.painter.BitmapPainter
-import androidx.core.content.ContentProviderCompat.requireContext
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
 import com.google.firebase.storage.storage
 import kotlinx.coroutines.launch
+
 
 //defines drawing items for the main screen
 @Composable
@@ -44,14 +42,12 @@ fun FileItem(
     viewModel: SelectDrawingViewModel,
     converter: BitmapConverter,
     navController: NavController,
-    upload: Boolean,
     onClose : () -> Unit,
     modifier: Modifier = Modifier
 ) {
     val coroutineScope = rememberCoroutineScope()
     val user by remember { mutableStateOf(Firebase.auth.currentUser) }
     var successfulPicUpload by remember {mutableStateOf(false)} // used for picture upload
-    var successfulPicDownload by remember {mutableStateOf(false)} // used for picture download
     Row(
         modifier = modifier, verticalAlignment = Alignment.CenterVertically
     ){
@@ -79,23 +75,18 @@ fun FileItem(
                 .padding(16.dp)
         )
 
-        IconButton( //Upload/Download Button
+        IconButton( //Upload Button
             onClick = {
                     coroutineScope.launch {
                         if (user == null) {
                             Log.d("ERROR", "Not logged in.")
                         } else {
-                            if (upload) {
-                                if(viewModel.uploadData(
-                                        Firebase.storage.reference,
-                                        "${user!!.uid}/" + drawing.fileName + ".png",
-                                        viewModel.bitmapToByteArray(drawing.bitmap)
-                                    )) {
-                                    successfulPicUpload = true //cues the icon to change
-                                }
-                            } else {
-                                // DOWNLOAD PIC
-                                successfulPicDownload = true //cues the icon to change
+                            if(viewModel.uploadData(
+                                    Firebase.storage.reference,
+                                    "${user!!.uid}/" + drawing.fileName + ".png",
+                                    viewModel.bitmapToByteArray(drawing.bitmap)
+                                )) {
+                                successfulPicUpload = true //cues the icon to change
                             }
                         }
                     }
@@ -103,30 +94,16 @@ fun FileItem(
             modifier = Modifier
                 .padding(end = 8.dp)
         ) {
-            if (upload) {
-                if (successfulPicUpload) {
-                    Icon(
-                        Icons.Filled.Check, contentDescription = "Successful Upload",
-                        tint = Color.White
-                    )
-                } else {
-                    Icon(
-                        Icons.Filled.Share, contentDescription = "Upload",
-                        tint = Color.White
-                    )
-                }
+            if (successfulPicUpload) {
+                Icon(
+                    Icons.Filled.Check, contentDescription = "Successful Upload",
+                    tint = Color.White
+                )
             } else {
-                if (successfulPicDownload) {
-                    Icon(
-                        Icons.Filled.Check, contentDescription = "Successful Download",
-                        tint = Color.White
-                    )
-                } else {
-                    Icon(
-                        Icons.Filled.Add, contentDescription = "Download",
-                        tint = Color.White
-                    )
-                }
+                Icon(
+                    Icons.Filled.Share, contentDescription = "Upload",
+                    tint = Color.White
+                )
             }
         }
         IconButton( //delete button
@@ -144,6 +121,7 @@ fun FileItem(
 @Composable
 fun DownloadableItem(
     drawing: DrawingData,
+    repo: DrawingRepository,
     modifier: Modifier = Modifier
 ) {
     val coroutineScope = rememberCoroutineScope()
@@ -171,6 +149,7 @@ fun DownloadableItem(
             onClick = {
                     coroutineScope.launch {
                         // DOWNLOAD PIC
+                        repo.saveNewDrawing(drawing.bitmap, drawing.fileName)
                         successfulPicDownload = true //cues the icon to change
                     }
                 },

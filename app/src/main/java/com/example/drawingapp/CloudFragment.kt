@@ -26,7 +26,6 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.viewModelScope
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -38,7 +37,8 @@ import kotlin.coroutines.suspendCoroutine
 class CloudFragment : Fragment() {
 
     private val converter = BitmapConverter()
-    private val myViewModel: CloudViewModel by viewModels()
+    private val viewModel: SelectDrawingViewModel by viewModels{
+        SelectDrawingViewModelFactory((requireActivity().application as DrawingApplication).drawingRepository)}
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -47,8 +47,6 @@ class CloudFragment : Fragment() {
         val binding = FragmentCloudBinding.inflate(layoutInflater, container, false)
         val viewModel: SelectDrawingViewModel by viewModels{
             SelectDrawingViewModelFactory((requireActivity().application as DrawingApplication).drawingRepository)}
-
-        val drawings = myViewModel.cloudDrawings
 
         //setting navigation on back button
         binding.backBtn.setOnClickListener {
@@ -61,7 +59,7 @@ class CloudFragment : Fragment() {
 
         //sets up composeview for composeUI
         binding.cloudFileList.setContent {
-            FileItemList(viewModel, drawings, converter, findNavController(), false)
+            FileItemList(viewModel, converter, findNavController())
         }
 
         return binding.root
@@ -187,7 +185,7 @@ class CloudFragment : Fragment() {
                     }
 
                     Log.d("DOWNLOAD", "LOGGED IN!")
-                    DownloadableList(list)
+                    DownloadableList(list, viewModel.repository)
 
                 }
 
