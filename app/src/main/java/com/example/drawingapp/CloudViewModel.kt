@@ -29,44 +29,55 @@ class CloudViewModel : ViewModel() {
 
     fun downloadDocument(): Flow<List<DrawingData>> = callbackFlow {
         val storage = FirebaseStorage.getInstance()
-        val user = FirebaseAuth.getInstance().currentUser
 
-        if (user == null)
-            return@callbackFlow
-
-        val storageReference: StorageReference = storage.reference.child("${user.uid}/")
         Log.d("DOWNLOAD", "DOWNLOADING...")
 
         try {
-            // List all items (files) in the specified storage folder
-            val listResult = storageReference.listAll().await()
+            val rootReference = storage.reference
+
+            // Get all files recursively.
+            suspend fun listAllFiles(reference: StorageReference): List<StorageReference> {
+                val listResult = reference.listAll().await()
+                val fileReferences = mutableListOf<StorageReference>()
+
+                fileReferences.addAll(listResult.items)
+
+                for (folder in listResult.prefixes) {
+                    fileReferences.addAll(listAllFiles(folder))
+                }
+
+                return fileReferences
+            }
+
+            val allFiles = listAllFiles(rootReference)
 
             val dataList = mutableListOf<DrawingData>()
 
-            // Loop through each item in the folder
-            for (item in listResult.items) {
-                // For each item, get the file as a byte array
-                val bytes = item.getBytes(Long.MAX_VALUE).await()
+            // Loop through and check if png.
+            for (file in allFiles) {
+                if (file.name.endsWith(".png", ignoreCase = true)) {
+                    val bytes = file.getBytes(Long.MAX_VALUE).await()
 
-                // Convert the byte array into a Bitmap
-                val bitmap = converter.toBitmap(bytes)
-                val name = item.name
+                    val bitmap = converter.toBitmap(bytes)
+                    val name = file.name
 
-                Log.d("DOWNLOAD", item.name)
+                    Log.d("DOWNLOAD", file.name)
 
-                if (bitmap != null) {
-                    dataList.add(DrawingData(bitmap, name))
+                    if (bitmap != null) {
+                        dataList.add(DrawingData(bitmap, name))
+                    }
                 }
             }
 
-            trySend(dataList) // Send the list of Bitmaps to the Flow
+            // Send the pngs to the flow.
+            trySend(dataList)
 
         } catch (e: Exception) {
             Log.d("DOWNLOAD", "DOWNLOAD FAILED.")
             close(e) // Close the flow if there is an error
         }
 
-        awaitClose { /* No cleanup necessary in this case */ }
+        awaitClose {  }
     }
 }
 

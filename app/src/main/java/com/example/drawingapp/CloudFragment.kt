@@ -174,10 +174,6 @@ class CloudFragment : Fragment() {
                     verticalArrangement = Arrangement.Center
                 ) {
 
-                    Text("Welcome back ${name}",
-                        color = Color.White,
-                        fontSize = 30.sp)
-
                     Button(onClick = {
                         Firebase.auth.signOut()
                         user = null
