@@ -61,7 +61,7 @@ fun DownloadableList(
                     fontSize = 30.sp
                 )
                 Text(
-                    "Please wait patiently",
+                    "Please Wait Patiently",
                     color = Color.White,
                     fontSize = 15.sp
                 )

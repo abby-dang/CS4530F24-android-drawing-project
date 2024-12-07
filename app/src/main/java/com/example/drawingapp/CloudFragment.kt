@@ -26,6 +26,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.NavController
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -49,13 +50,8 @@ class CloudFragment : Fragment() {
         val viewModel: SelectDrawingViewModel by viewModels{
             SelectDrawingViewModelFactory((requireActivity().application as DrawingApplication).drawingRepository)}
 
-        //setting navigation on back button
-        binding.backBtn.setOnClickListener {
-            findNavController().navigate(R.id.action_back)
-        }
-
         binding.loginView.setContent {
-            LoginView()
+            LoginView(findNavController())
         }
 
         //sets up composeview for composeUI
@@ -67,14 +63,43 @@ class CloudFragment : Fragment() {
     }
 
     @Composable
-    fun LoginView() {
+    fun LoginView(navController: NavController) {
         var user by rememberSaveable { mutableStateOf(Firebase.auth.currentUser) }
+
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(60.dp), // Adjust the height for a small box
+            contentAlignment = Alignment.Center
+        ) {
+            Row(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(horizontal = 8.dp), // Add some padding to the edges
+                horizontalArrangement = Arrangement.SpaceBetween, // Space out the buttons
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Button(onClick = {
+                    navController.navigate(R.id.action_back) // Replace with your navigation action
+                }) {
+                    Text("Back")
+                }
+                if (user != null) {
+                    Button(onClick = {
+                        Firebase.auth.signOut()
+                        user = null
+                    }) {
+                        Text("Sign Out")
+                    }
+                }
+            }
+        }
 
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(16.dp),
-            verticalArrangement = Arrangement.Center
+                .padding(48.dp),
+            verticalArrangement = Arrangement.Top
         ) {
             if (user == null) {
                 var email by remember { mutableStateOf("") }
@@ -173,14 +198,6 @@ class CloudFragment : Fragment() {
                         .padding(16.dp),
                     verticalArrangement = Arrangement.Center
                 ) {
-
-                    Button(onClick = {
-                        Firebase.auth.signOut()
-                        user = null
-                    }) {
-                        Text("Sign Out")
-                    }
-
                     Log.d("DOWNLOAD", "LOGGED IN!")
                     DownloadableList(list, viewModel.repository)
 

@@ -7,13 +7,6 @@
     android:background="@color/grey"
     tools:context=".CloudFragment">
 
-    <Button
-        android:id="@+id/backBtn"
-        android:layout_width="75dp"
-        android:layout_height="50dp"
-        android:text="@string/x"
-        android:textSize="20sp"/>
-
     <androidx.compose.ui.platform.ComposeView
         android:id="@+id/loginView"
         android:layout_width="match_parent"
