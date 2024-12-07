@@ -50,6 +50,7 @@ class ExampleInstrumentedTest {
     }
 
 
+
     @Test
     fun testDatabaseSave() {
         val bitmap = Bitmap.createBitmap(40, 40, Bitmap.Config.ARGB_8888)
@@ -61,6 +62,27 @@ class ExampleInstrumentedTest {
                     drawingDao.saveDrawing(drawingData)
                     val findDrawing = drawingDao.checkIfExists("helloworld")
                     val drawingExists = findDrawing > 0
+                    assertTrue(drawingExists)
+                }
+
+            }
+        }
+    }
+
+    @Test
+    fun testDatabaseSaveSameFile() {
+        val bitmap = Bitmap.createBitmap(40, 40, Bitmap.Config.ARGB_8888)
+        val drawingData = DrawingData(bitmap, "helloworld")
+        val drawingData1 = DrawingData(bitmap, "helloworld");
+        runBlocking {
+            val lifeCycleOwner = TestLifecycleOwner()
+            lifeCycleOwner.run {
+                withContext(Dispatchers.IO) {
+                    drawingDao.saveDrawing(drawingData)
+                    drawingDao.saveDrawing(drawingData1)
+                    drawingDao.deleteDrawing("helloworld")
+                    val findDrawing = drawingDao.checkIfExists("helloworld")
+                    val drawingExists = findDrawing == 0
                     assertTrue(drawingExists)
                 }
 
@@ -87,6 +109,31 @@ class ExampleInstrumentedTest {
         }
     }
 
+    @Test
+    fun testDatabaseSaveAndClear() {
+        val bitmap = Bitmap.createBitmap(40, 40, Bitmap.Config.ARGB_8888)
+        val drawingData = DrawingData(bitmap, "testing")
+        val drawingData1 = DrawingData(bitmap, "testing1")
+        val drawingData2 = DrawingData(bitmap, "testing2")
+        val drawingData3 = DrawingData(bitmap, "testing3")
+        runBlocking {
+            val lifeCycleOwner = TestLifecycleOwner()
+            lifeCycleOwner.run {
+                withContext(Dispatchers.IO) {
+                    drawingDao.saveDrawing(drawingData)
+                    drawingDao.saveDrawing(drawingData1)
+                    drawingDao.saveDrawing(drawingData2)
+                    drawingDao.saveDrawing(drawingData3)
+                    var total = drawingDao.totalNumDrawings()
+                    assertEquals(4, total);
+                    drawingDao.clearDrawings()
+                    total = drawingDao.totalNumDrawings()
+                    assertEquals(0, total)
+                }
+
+            }
+        }
+    }
     @Test
     fun testDatabaseDataRetrieval() {
         val bitmap = Bitmap.createBitmap(40, 40, Bitmap.Config.ARGB_8888)
