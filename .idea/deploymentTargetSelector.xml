@@ -8,6 +8,9 @@
       <SelectionState runConfigName="testDatabaseSaveSameFile()">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
+      <SelectionState runConfigName="testDatabaseSaveAndClear()">
+        <option name="selectionMode" value="DROPDOWN" />
+      </SelectionState>
     </selectionStates>
   </component>
 </project>

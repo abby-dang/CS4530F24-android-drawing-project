@@ -73,7 +73,7 @@ class ExampleInstrumentedTest {
     fun testDatabaseSaveSameFile() {
         val bitmap = Bitmap.createBitmap(40, 40, Bitmap.Config.ARGB_8888)
         val drawingData = DrawingData(bitmap, "helloworld")
-        val drawingData1 = DrawingData(bitmap, "helloworld");
+        val drawingData1 = DrawingData(bitmap, "helloworld")
         runBlocking {
             val lifeCycleOwner = TestLifecycleOwner()
             lifeCycleOwner.run {
@@ -125,7 +125,7 @@ class ExampleInstrumentedTest {
                     drawingDao.saveDrawing(drawingData2)
                     drawingDao.saveDrawing(drawingData3)
                     var total = drawingDao.totalNumDrawings()
-                    assertEquals(4, total);
+                    assertEquals(4, total)
                     drawingDao.clearDrawings()
                     total = drawingDao.totalNumDrawings()
                     assertEquals(0, total)
